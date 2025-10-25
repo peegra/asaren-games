@@ -23,7 +23,7 @@ body {
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   margin: 0;
   min-height: 100vh;
-  background: var(--color-bg);
+  background: #f1f5fd;
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -50,31 +50,35 @@ button {
 }
 
 .app {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: clamp(24px, 6vw, 48px) clamp(16px, 5vw, 56px);
+  max-width: none;
+  margin: 0;
+  padding: clamp(12px, 4vw, 20px) 0 0;
 }
 
 .app > h1 {
-  margin-bottom: clamp(12px, 4vw, 24px);
+  margin-bottom: clamp(12px, 3vw, 20px);
+  font-size: clamp(1.8rem, 4.5vw, 2.4rem);
 }
 
 .tabs {
   display: flex;
+  width: 100%;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
-  margin: clamp(20px, 5vw, 32px) 0;
+  gap: clamp(8px, 3vw, 12px);
+  margin: clamp(12px, 3vw, 20px) auto clamp(12px, 3vw, 24px);
+  max-width: 960px;
 }
 
 .tab-button {
-  flex: 1 1 180px;
-  max-width: 240px;
-  padding: 0.8rem 1rem;
+  flex: 1 1 clamp(140px, 28vw, 220px);
+  max-width: none;
+  padding: clamp(0.85rem, 2.8vw, 1.1rem) clamp(1rem, 3vw, 1.4rem);
   border-radius: 999px;
   background: rgba(37, 99, 235, 0.12);
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 3.2vw, 1.15rem);
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
@@ -83,7 +87,7 @@ button {
 .tab-button.is-active {
   background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
 }
 
 .tab-button:hover,
@@ -104,40 +108,41 @@ button {
   transform: translateY(0);
 }
 
-.content-frame {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
-  overflow: hidden;
+#content {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 #contentFrame {
   width: 100%;
-  min-height: clamp(520px, 70vh, 720px);
+  min-height: clamp(540px, 72vh, 780px);
   border: none;
   display: block;
-  background: var(--color-surface);
+  background: transparent;
 }
 
 .page {
-  max-width: 640px;
-  margin: clamp(12px, 5vw, 32px) auto;
-  padding: clamp(24px, 6vw, 36px);
+  width: 100%;
+  max-width: 960px;
+  margin: clamp(12px, 3vw, 24px) auto clamp(32px, 5vw, 48px);
+  padding: clamp(24px, 4vw, 34px);
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
+  border-radius: 18px;
   box-shadow: var(--shadow-soft);
 }
 
 .page > h1 {
-  margin-bottom: 8px;
+  margin-bottom: clamp(12px, 3vw, 18px);
+  font-size: clamp(1.7rem, 4.6vw, 2.4rem);
 }
 
 .page-helper {
-  margin: 0 auto clamp(20px, 4vw, 32px);
-  max-width: 440px;
+  margin: 0 auto clamp(18px, 3.5vw, 28px);
+  max-width: 560px;
   text-align: center;
   color: var(--color-muted);
-  font-size: 0.95rem;
+  font-size: clamp(1rem, 3.2vw, 1.12rem);
 }
 
 .list-actions {
@@ -146,6 +151,7 @@ button {
   align-items: center;
   gap: 12px;
   margin: clamp(12px, 4vw, 20px) 0;
+  width: 100%;
 }
 
 .team-settings {
@@ -156,6 +162,7 @@ button {
   padding: 12px 16px;
   border-radius: var(--radius-md);
   background: rgba(37, 99, 235, 0.08);
+  width: min(100%, 520px);
 }
 
 .team-settings-label {
@@ -192,6 +199,7 @@ button {
   justify-content: center;
   min-width: 88px;
   padding: 0.45rem 0.9rem;
+  line-height: 1.1;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.95rem;
@@ -408,7 +416,7 @@ input[type="tel"]:focus {
 .list-card {
   background: rgba(37, 99, 235, 0.05);
   border-radius: var(--radius-md);
-  padding: clamp(16px, 4vw, 24px);
+  padding: clamp(18px, 4vw, 26px);
 }
 
 .players-list {
@@ -535,7 +543,7 @@ input[type="tel"]:focus {
   background: var(--color-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  padding: clamp(18px, 4vw, 26px);
+  padding: clamp(18px, 4vw, 28px);
   display: grid;
   gap: clamp(14px, 3vw, 20px);
 }
@@ -602,26 +610,53 @@ input[type="tel"]:focus {
 
 @media (max-width: 768px) {
   .app {
-    padding: clamp(20px, 7vw, 32px) clamp(12px, 6vw, 24px);
+    padding: 18px 16px 0;
+  }
+
+  #content {
+    max-width: 760px;
   }
 
   .tab-button {
     flex: 1 1 140px;
     max-width: none;
+    font-size: clamp(1rem, 3.4vw, 1.2rem);
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 12px auto 36px;
   }
 }
 
 @media (max-width: 600px) {
+  .app {
+    padding: 14px 12px 0;
+  }
+
+  #content {
+    max-width: none;
+  }
+
   .tabs {
     gap: 10px;
+    margin: 12px 0 16px;
   }
 
   .tab-button {
     flex: 1 1 100%;
+    font-size: clamp(1.05rem, 4vw, 1.2rem);
+    padding: 1rem 1.2rem;
   }
 
   #contentFrame {
-    min-height: clamp(460px, 75vh, 660px);
+    min-height: clamp(520px, 76vh, 760px);
+  }
+
+  .page {
+    margin: 0;
+    border-radius: 16px;
+    padding: 20px 16px 26px;
   }
 
   .form-actions {
@@ -643,6 +678,31 @@ input[type="tel"]:focus {
   .team-board {
     grid-template-columns: 1fr;
   }
+
+  .list-card {
+    padding: 20px;
+  }
+
+  .team-settings {
+    width: 100%;
+  }
+
+  .team-count-option span {
+    min-width: 120px;
+    font-size: 1rem;
+  }
+
+  .team-column {
+    padding: 20px;
+  }
+
+  .team-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .team-count {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -659,5 +719,19 @@ input[type="tel"]:focus {
 
   .team-actions {
     flex-direction: column;
+  }
+
+  .tab-button {
+    font-size: 1.1rem;
+    padding: 1.05rem 1.2rem;
+  }
+
+  .page-helper {
+    font-size: 1.05rem;
+  }
+
+  .list-card,
+  .team-column {
+    padding: 18px;
   }
 }
