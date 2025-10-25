@@ -5,7 +5,7 @@
 
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
   const TEAM_LABEL_FALLBACK = ["A", "B", "C", "D", "E", "F"];
-  const TEAM_NAMES_URL = "/src/teamNames.json";
+  const TEAM_NAMES_URL = new URL("../src/teamNames.json", window.location.href).href;
   const TEAM_STATE_COLLECTION = "appState";
   const TEAM_STATE_DOC_ID = "team";
   const fallbackDocRef = () => db.collection(TEAM_STATE_COLLECTION).doc(TEAM_STATE_DOC_ID);
