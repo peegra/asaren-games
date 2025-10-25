@@ -1,40 +1,32 @@
 # Players Tabs App
 
-このプロジェクトは、選手の登録と一覧表示をタブで切り替えられるウェブアプリケーションです。Firebase Firestoreを使用してデータを管理します。
+選手の登録と一覧表示をタブで切り替えられるウェブアプリケーションです。Firebase Firestoreを使用してデータを管理します。
 
-## ファイル構成
+## フォルダ構成
 
-- `public/index.html`: アプリケーションのメインHTMLファイル。タブの構造を持ち、登録画面と一覧画面へのリンクを提供します。
-- `public/registration.html`: 選手の登録画面を表示します。ユーザーが名前と学年を入力し、選手を追加するためのフォームを含みます。
-- `public/list.html`: 選手の一覧を表示します。Firestoreから取得した選手の情報をリスト形式で表示します。
-- `public/styles.css`: アプリケーションのスタイルシート。タブやフォームのスタイルを定義します。
-- `src/app.js`: アプリケーションのエントリーポイント。タブの切り替え機能を実装し、登録画面と一覧画面を表示します。
-- `src/registration.js`: 選手の登録機能を実装します。Firestoreに選手を追加するための関数を含みます。
-- `src/list.js`: 選手の一覧を取得し、表示する機能を実装します。Firestoreからデータを取得し、リストに表示します。
-- `src/firebase.js`: Firebaseの初期化とFirestoreの設定を行います。Firebaseの設定情報を含みます。
-- `package.json`: npmの設定ファイル。依存関係やスクリプトをリストします。
-- `.gitignore`: Gitで無視するファイルやフォルダを指定します。
+- `public/index.html` : アプリ全体のタブ UI と iframe を定義
+- `public/registration.html` : 名前と学年（ボタン選択）で選手を登録
+- `public/list.html` : 登録済み選手の一覧表示と削除ボタン
+- `public/styles.css` : 共通スタイル（レスポンシブ対応）
+- `src/firebase.js` : Firebase 初期化と Firestore 接続（グローバル公開）
+- `src/registration.js` : 登録フォームの送信処理
+- `src/list.js` : Firestore からの取得と削除処理
+- `package.json` : 依存関係と npm スクリプト
 
-## セットアップ手順
+## セットアップ
 
-1. リポジトリをクローンします。
-2. 必要な依存関係をインストールします。
-   ```
-   npm install
-   ```
-3. アプリケーションを起動します。
-   ```
-   npm start
-   ```
-4. ブラウザで `http://localhost:3000` にアクセスします。
+```bash
+npm install
+npm run start
+```
+
+`npm run start` で `live-server` が 127.0.0.1:8080 (または localhost:8080) で `public/` を配信します。ブラウザでアクセスして動作確認してください。
 
 ## 使用技術
 
-- HTML
-- CSS
-- JavaScript
-- Firebase Firestore
+- HTML / CSS / JavaScript
+- Firebase Firestore (compat 版 SDK)
 
 ## ライセンス
 
-このプロジェクトはMITライセンスの下で公開されています。
+MIT License
