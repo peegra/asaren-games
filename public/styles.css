@@ -280,8 +280,8 @@ button {
 }
 
 .grade-group-title {
-  margin: 0 0 0.5rem;
-  font-size: 0.95rem;
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
   font-weight: 700;
   color: var(--color-primary-strong);
 }
@@ -289,17 +289,18 @@ button {
 .grade-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .grade-button {
-  flex: 1 1 90px;
-  padding: 0.65rem 1rem;
+  flex: 1 1 110px;
+  padding: 0.85rem 1.35rem;
   border-radius: 999px;
   border: 1px solid rgba(37, 99, 235, 0.4);
   background: rgba(255, 255, 255, 0.9);
   color: var(--color-primary-strong);
   font-weight: 600;
+  font-size: clamp(1.25rem, 4.2vw, 1.45rem);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
@@ -429,18 +430,19 @@ input[type="tel"]:focus {
 
 .players-list li {
   background: var(--color-surface);
-  border-radius: 12px;
-  padding: 0.9rem 1.1rem;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-  font-weight: 500;
+  border-radius: 14px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  font-weight: 600;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--color-text);
+  font-size: clamp(1.25rem, 4.2vw, 1.45rem);
 }
 
 .player-row {
-  gap: 12px;
+  gap: 16px;
 }
 
 .player-info {
@@ -450,16 +452,17 @@ input[type="tel"]:focus {
 
 .player-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .participation-button {
-  padding: 0.55rem 1.2rem;
+  padding: 0.7rem 1.4rem;
   border-radius: 999px;
   border: 1px solid rgba(16, 185, 129, 0.4);
   background: rgba(16, 185, 129, 0.1);
   color: var(--color-accent-strong);
   font-weight: 600;
+  font-size: clamp(1.05rem, 3.4vw, 1.2rem);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
@@ -495,16 +498,16 @@ input[type="tel"]:focus {
 }
 
 .danger-button {
-  padding: 0.55rem;
-  width: 2.6rem;
-  height: 2.6rem;
+  padding: 0.65rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   border: none;
   background: #ef4444;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -512,8 +515,8 @@ input[type="tel"]:focus {
 }
 
 .danger-button svg {
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .danger-button svg path {
@@ -556,12 +559,12 @@ input[type="tel"]:focus {
 
 .team-header h2 {
   margin: 0;
-  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-size: clamp(1.35rem, 4.2vw, 1.6rem);
   color: var(--color-primary-strong);
 }
 
 .team-count {
-  font-size: 0.95rem;
+  font-size: clamp(1.05rem, 3.2vw, 1.2rem);
   color: var(--color-muted);
   font-weight: 600;
 }
@@ -576,16 +579,18 @@ input[type="tel"]:focus {
 
 .team-player {
   background: rgba(15, 23, 42, 0.04);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  font-weight: 600;
+  border-radius: 14px;
+  padding: 1rem 1.3rem;
+  font-weight: 700;
   color: var(--color-text);
+  font-size: clamp(1.2rem, 4vw, 1.4rem);
 }
 
 .team-player.empty {
   background: rgba(15, 23, 42, 0.02);
   color: var(--color-muted);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: clamp(1.1rem, 3.6vw, 1.3rem);
   text-align: center;
 }
 
@@ -709,7 +714,7 @@ input[type="tel"]:focus {
   .players-list li {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: 10px;
   }
 
   .player-actions {
