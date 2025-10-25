@@ -10,7 +10,20 @@
     <h1>選手一覧</h1>
     <p class="page-helper">登録済みのメンバーが下に表示されます。</p>
     <div class="list-actions">
-      <button id="teamSplitButton" class="secondary-button" type="button">チーム分け</button>
+      <div class="team-settings" role="radiogroup" aria-label="振り分けチーム数">
+        <span class="team-settings-label">振り分けチーム数</span>
+        <div class="team-count-options">
+          <label class="team-count-option">
+            <input type="radio" name="teamCount" value="2" checked>
+            <span>2チーム</span>
+          </label>
+          <label class="team-count-option">
+            <input type="radio" name="teamCount" value="3">
+            <span>3チーム</span>
+          </label>
+        </div>
+      </div>
+      <button id="teamSplitButton" class="secondary-button" type="button">今日のチームはこれだ！</button>
     </div>
     <div class="list-card">
       <ul id="playersList" class="players-list" aria-live="polite"></ul>

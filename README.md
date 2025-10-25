@@ -6,13 +6,14 @@
 
 - `public/index.html` : アプリ全体のタブ UI と iframe を定義
 - `public/registration.html` : 名前と学年（ボタン選択）で選手を登録
-- `public/list.html` : 登録済み選手の一覧表示・参戦トグル・チーム分けボタン
-- `public/team.html` : 参戦中メンバーを A/B に振り分けて表示
+- `public/list.html` : 登録済み選手の一覧表示・エントリートグル・チーム分けボタン
+- `public/team.html` : エントリー中メンバーを 2/3 チームに振り分け、カテゴリに応じたチーム名を表示
 - `public/styles.css` : 共通スタイル（レスポンシブ対応）
 - `src/firebase.js` : Firebase 初期化と Firestore 接続（グローバル公開）
 - `src/registration.js` : 登録フォームの送信処理
 - `src/list.js` : Firestore からの取得と削除処理
-- `src/team.js` : 参戦メンバーの取得とチーム分けロジック
+- `src/team.js` : エントリーメンバーの取得とチーム分けロジック（チーム名のランダム生成を含む）
+- `src/teamNames.json` : チームカテゴリと言葉の候補リスト
 - `package.json` : 依存関係と npm スクリプト
 
 ## セットアップ

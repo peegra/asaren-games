@@ -7,26 +7,10 @@
 </head>
 <body>
   <main class="page">
-    <h1>チーム分け</h1>
-    <p class="page-helper">参戦中のメンバーを A / B の2チームに振り分けています。</p>
+    <h1 id="teamTitle">チーム分け</h1>
+    <p class="page-helper">エントリー中のメンバーをシチュエーションに合わせてチーム名にします。</p>
 
-    <section class="team-board">
-      <article class="team-column">
-        <header class="team-header">
-          <h2>チーム A</h2>
-          <span class="team-count" id="teamACount">0 人</span>
-        </header>
-        <ul id="teamAList" class="team-list"></ul>
-      </article>
-
-      <article class="team-column">
-        <header class="team-header">
-          <h2>チーム B</h2>
-          <span class="team-count" id="teamBCount">0 人</span>
-        </header>
-        <ul id="teamBList" class="team-list"></ul>
-      </article>
-    </section>
+    <section id="teamBoard" class="team-board" aria-live="polite"></section>
 
     <div class="team-actions">
       <button class="secondary-button" type="button" id="reshuffleButton">再分けする</button>

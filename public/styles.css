@@ -142,8 +142,73 @@ button {
 
 .list-actions {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin: clamp(12px, 4vw, 20px) 0;
+}
+
+.team-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.team-settings-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.team-count-options {
+  display: inline-flex;
+  gap: 10px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+.team-count-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.team-count-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.team-count-option span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.team-count-option input:checked + span {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.team-count-option span:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
 
 .form-card {
@@ -154,6 +219,28 @@ button {
 .form-field {
   display: grid;
   gap: 8px;
+}
+
+.pill-input {
+  width: 100%;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.08);
+  font-size: 1rem;
+  color: var(--color-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.pill-input::placeholder {
+  color: rgba(71, 85, 105, 0.7);
+}
+
+.pill-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: rgba(37, 99, 235, 0.12);
+  box-shadow: var(--shadow-focus);
 }
 
 .form-field label {
@@ -229,7 +316,6 @@ button {
   transform: translateY(0);
 }
 
-input[type="text"],
 input[type="number"],
 input[type="search"],
 input[type="tel"] {
@@ -242,7 +328,6 @@ input[type="tel"] {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus {
@@ -253,7 +338,7 @@ input[type="tel"]:focus {
 
 .form-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 12px;
 }
 
@@ -402,14 +487,33 @@ input[type="tel"]:focus {
 }
 
 .danger-button {
-  padding: 0.55rem 1.1rem;
-  border-radius: 999px;
+  padding: 0.55rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
   border: none;
   background: #ef4444;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.danger-button svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.danger-button svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .danger-button:hover,
@@ -422,7 +526,7 @@ input[type="tel"]:focus {
 
 .team-board {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: clamp(16px, 4vw, 28px);
   margin-top: clamp(24px, 6vw, 36px);
 }
@@ -477,6 +581,17 @@ input[type="tel"]:focus {
   text-align: center;
 }
 
+.team-empty {
+  grid-column: 1 / -1;
+  background: rgba(15, 23, 42, 0.03);
+  border-radius: var(--radius-md);
+  padding: clamp(24px, 6vw, 32px);
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-muted);
+  box-shadow: var(--shadow-soft);
+}
+
 .team-actions {
   display: flex;
   justify-content: center;
@@ -510,7 +625,7 @@ input[type="tel"]:focus {
   }
 
   .form-actions {
-    justify-content: stretch;
+    justify-content: center;
   }
 
   .form-actions .primary-button {
