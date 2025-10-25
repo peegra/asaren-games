@@ -10,14 +10,97 @@
   <main class="app container-fluid px-3 px-md-4 py-4">
     <h1>Players Tabs App</h1>
     <div class="tabs" role="tablist">
-      <button id="tab-registration" class="tab-button is-active" type="button" onclick="showRegistration()">登録画面</button>
-      <button id="tab-list" class="tab-button" type="button" onclick="showList()">一覧画面</button>
-      <button id="tab-team" class="tab-button" type="button" onclick="showTeam()">チーム</button>
+      <button id="tab-registration" class="tab-button is-active" type="button">登録画面</button>
+      <button id="tab-list" class="tab-button" type="button">一覧画面</button>
+      <button id="tab-team" class="tab-button" type="button">チーム</button>
     </div>
 
-    <div id="content" class="content-frame">
-      <iframe src="registration.html" id="contentFrame" title="players-content"></iframe>
-    </div>
+    <section id="view-registration" class="page">
+      <h1>選手登録</h1>
+      <p class="page-helper">選手の名前と学年を入力して、リストに追加しましょう。</p>
+
+      <form class="form-card" onsubmit="event.preventDefault(); addPlayer();">
+        <div class="form-field">
+          <label for="name">名前</label>
+          <input id="name" class="pill-input" placeholder="例: 佐藤 太郎" autocomplete="name">
+        </div>
+        <div class="form-field grade-selector">
+          <span class="fieldset-label">学年</span>
+          <input type="hidden" id="grade">
+          <div class="grade-groups">
+            <section class="grade-group">
+              <h2 class="grade-group-title">小学生（低学年）</h2>
+              <div class="grade-buttons" role="group" aria-label="小学生（低学年）">
+                <button type="button" class="grade-button" data-grade="小1">小1</button>
+                <button type="button" class="grade-button" data-grade="小2">小2</button>
+                <button type="button" class="grade-button" data-grade="小3">小3</button>
+              </div>
+            </section>
+            <section class="grade-group">
+              <h2 class="grade-group-title">小学生（高学年）</h2>
+              <div class="grade-buttons" role="group" aria-label="小学生（高学年）">
+                <button type="button" class="grade-button" data-grade="小4">小4</button>
+                <button type="button" class="grade-button" data-grade="小5">小5</button>
+                <button type="button" class="grade-button" data-grade="小6">小6</button>
+              </div>
+            </section>
+            <section class="grade-group">
+              <h2 class="grade-group-title">中学生</h2>
+              <div class="grade-buttons" role="group" aria-label="中学生">
+                <button type="button" class="grade-button" data-grade="中1">中1</button>
+                <button type="button" class="grade-button" data-grade="中2">中2</button>
+                <button type="button" class="grade-button" data-grade="中3">中3</button>
+              </div>
+            </section>
+            <section class="grade-group">
+              <h2 class="grade-group-title">その他</h2>
+              <div class="grade-buttons" role="group" aria-label="その他">
+                <button type="button" class="grade-button" data-grade="大人">大人</button>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="primary-button" type="submit">追加</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="view-list" class="page d-none">
+      <h1>選手一覧</h1>
+      <p class="page-helper">登録済みのメンバーが下に表示されます。</p>
+      <div class="list-actions">
+        <div class="team-settings" role="radiogroup" aria-label="振り分けチーム数">
+          <span class="team-settings-label">振り分けチーム数</span>
+          <div class="team-count-options">
+            <label class="team-count-option">
+              <input type="radio" name="teamCount" value="2" checked>
+              <span>2チーム</span>
+            </label>
+            <label class="team-count-option">
+              <input type="radio" name="teamCount" value="3">
+              <span>3チーム</span>
+            </label>
+          </div>
+        </div>
+        <button id="teamSplitButton" class="secondary-button" type="button">今日のチームはこれだ！</button>
+      </div>
+      <div class="list-card">
+        <ul id="playersList" class="players-list" aria-live="polite"></ul>
+      </div>
+    </section>
+
+    <section id="view-team" class="page d-none">
+      <h1 id="teamTitle">チーム分け</h1>
+      <p class="page-helper">最高のチーム分けが出来上がったよ！チーム分けはASARENの神様が作ったので文句は言えないよ！</p>
+
+      <section id="teamBoard" class="team-board" aria-live="polite"></section>
+
+      <div class="team-actions">
+        <button class="secondary-button" type="button" id="reshuffleButton">再分けする</button>
+        <button class="text-button" type="button" id="backToListButton">一覧に戻る</button>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -27,32 +110,51 @@
       team: document.getElementById('tab-team')
     };
 
+    const views = {
+      registration: document.getElementById('view-registration'),
+      list: document.getElementById('view-list'),
+      team: document.getElementById('view-team')
+    };
+
     function setActiveTab(target) {
-      Object.values(tabs).forEach(button => button.classList.remove('is-active'));
-      if (tabs[target]) {
-        tabs[target].classList.add('is-active');
+      Object.entries(tabs).forEach(([key, button]) => {
+        button.classList.toggle('is-active', key === target);
+      });
+    }
+
+    function showView(target) {
+      Object.entries(views).forEach(([key, section]) => {
+        section.classList.toggle('d-none', key !== target);
+      });
+      setActiveTab(target);
+      const tabsTop = document.querySelector('.tabs');
+      if (tabsTop) {
+        const { top } = tabsTop.getBoundingClientRect();
+        if (top < 0) {
+          window.scrollTo({ top: window.scrollY + top - 16, behavior: 'smooth' });
+        }
       }
     }
 
-    function showRegistration() {
-      document.getElementById('contentFrame').src = 'registration.html';
-      setActiveTab('registration');
-    }
+    window.showView = showView;
+    window.showRegistration = () => showView('registration');
+    window.showList = () => showView('list');
+    window.showTeam = () => showView('team');
 
-    function showList() {
-      document.getElementById('contentFrame').src = 'list.html';
-      setActiveTab('list');
-    }
+    tabs.registration.addEventListener('click', window.showRegistration);
+    tabs.list.addEventListener('click', window.showList);
+    tabs.team.addEventListener('click', window.showTeam);
 
-    function showTeam() {
-      document.getElementById('contentFrame').src = 'team.html';
-      setActiveTab('team');
-    }
+    document.getElementById('backToListButton').addEventListener('click', window.showList);
 
-    window.showRegistration = showRegistration;
-    window.showList = showList;
-    window.showTeam = showTeam;
+    showView('registration');
   </script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="../src/firebase.js"></script>
+  <script src="../src/registration.js"></script>
+  <script src="../src/list.js"></script>
+  <script src="../src/team.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

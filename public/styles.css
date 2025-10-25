@@ -109,22 +109,6 @@ button {
   transform: translateY(0);
 }
 
-#content {
-  width: 100%;
-  flex: 1;
-  display: flex;
-}
-
-#contentFrame {
-  width: 100%;
-  border: none;
-  background: transparent;
-  flex: 1;
-  height: 100%;
-  min-height: 100%;
-  display: block;
-}
-
 .page {
   width: 100%;
   display: flex;
@@ -566,15 +550,6 @@ button {
   .tabs {
     max-width: 960px;
     margin: clamp(16px, 4vw, 32px) auto clamp(20px, 4vw, 36px);
-  }
-
-  #content {
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-  #contentFrame {
-    min-height: 680px;
   }
 
   .page {
