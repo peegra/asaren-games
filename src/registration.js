@@ -22,7 +22,8 @@
 
     db.collection("players").add({
       name: name,
-      grade: grade
+      grade: grade,
+      participating: false
     })
     .then(() => {
       document.getElementById("name").value = "";
