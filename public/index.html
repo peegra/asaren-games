@@ -10,9 +10,18 @@
   <main class="app container-fluid px-3 px-md-4 py-4">
     <h1>Players Tabs App</h1>
     <div class="tabs" role="tablist">
-      <button id="tab-registration" class="tab-button is-active" type="button">登録画面</button>
-      <button id="tab-list" class="tab-button" type="button">一覧画面</button>
-      <button id="tab-team" class="tab-button" type="button">チーム</button>
+      <button id="tab-registration" class="tab-button is-active" type="button">
+        <span class="tab-icon" aria-hidden="true">📝</span>
+        <span class="tab-label">登録</span>
+      </button>
+      <button id="tab-list" class="tab-button" type="button">
+        <span class="tab-icon" aria-hidden="true">📋</span>
+        <span class="tab-label">一覧</span>
+      </button>
+      <button id="tab-team" class="tab-button" type="button">
+        <span class="tab-icon" aria-hidden="true">🏆</span>
+        <span class="tab-label">チーム</span>
+      </button>
     </div>
 
     <section id="view-registration" class="page">
