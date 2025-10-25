@@ -446,8 +446,8 @@ button {
 }
 
 .team-board {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
@@ -459,6 +459,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 
 .team-header {
@@ -595,11 +596,7 @@ button {
 
   .team-board {
     gap: clamp(24px, 4vw, 32px);
-  }
-
-  .team-column {
-    max-width: 820px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 
   .players-list li {
@@ -621,11 +618,11 @@ button {
     padding: clamp(32px, 4vw, 48px);
   }
 
-  .team-column {
-    max-width: 880px;
-  }
-
   .grade-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .team-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
