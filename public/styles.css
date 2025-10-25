@@ -31,7 +31,8 @@ body {
   min-height: 100vh;
   background: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.65;
+  line-height: 1.8;
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
   -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: column;
@@ -90,6 +91,7 @@ button {
   letter-spacing: 0.01em;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 60px;
 }
 
 .tab-button.is-active {
@@ -202,6 +204,7 @@ button {
   font-size: clamp(1.2rem, 4vw, 1.4rem);
   color: var(--color-primary-strong);
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 60px;
 }
 
 .grade-button:hover,
@@ -241,6 +244,7 @@ button {
   color: #fff;
   font-size: clamp(1.15rem, 4vw, 1.35rem);
   box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
+  min-height: 62px;
 }
 
 .primary-button:hover,
@@ -256,6 +260,7 @@ button {
   color: var(--color-primary-strong);
   border: 1px solid rgba(37, 99, 235, 0.35);
   font-size: clamp(1.15rem, 4vw, 1.35rem);
+  min-height: 60px;
 }
 
 .secondary-button:hover,
@@ -271,6 +276,7 @@ button {
   background: transparent;
   color: var(--color-primary);
   font-size: clamp(1.1rem, 3.6vw, 1.3rem);
+  min-height: 56px;
 }
 
 .text-button:hover,
@@ -338,6 +344,7 @@ button {
   font-weight: 700;
   color: var(--color-primary-strong);
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 60px;
 }
 
 .team-count-option input:checked + span {
@@ -403,6 +410,7 @@ button {
   font-size: clamp(1.1rem, 3.6vw, 1.3rem);
   font-weight: 700;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 60px;
 }
 
 .participation-button.is-active {
