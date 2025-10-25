@@ -192,7 +192,7 @@
     });
 
     if (teamTitle) {
-      teamTitle.textContent = `${teamState.categoryName}チーム`;
+      teamTitle.textContent = `${teamState.categoryName}カップ`;
     }
 
     teamBoard.appendChild(fragment);
