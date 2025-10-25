@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>選手登録</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <h1>選手登録</h1>
+    <p class="page-helper">選手の名前と学年を入力して、リストに追加しましょう。</p>
+
+    <form class="form-card" onsubmit="event.preventDefault(); addPlayer();">
+      <div class="form-field">
+        <label for="name">名前</label>
+        <input id="name" placeholder="例: 佐藤 太郎" autocomplete="name">
+      </div>
+      <div class="form-field grade-selector">
+        <span class="fieldset-label">学年</span>
+        <input type="hidden" id="grade">
+        <div class="grade-groups">
+          <section class="grade-group">
+            <h2 class="grade-group-title">小学生</h2>
+            <div class="grade-buttons" role="group" aria-label="小学生">
+              <button type="button" class="grade-button" data-grade="小1">小1</button>
+              <button type="button" class="grade-button" data-grade="小2">小2</button>
+              <button type="button" class="grade-button" data-grade="小3">小3</button>
+              <button type="button" class="grade-button" data-grade="小4">小4</button>
+              <button type="button" class="grade-button" data-grade="小5">小5</button>
+              <button type="button" class="grade-button" data-grade="小6">小6</button>
+            </div>
+          </section>
+          <section class="grade-group">
+            <h2 class="grade-group-title">中学生</h2>
+            <div class="grade-buttons" role="group" aria-label="中学生">
+              <button type="button" class="grade-button" data-grade="中1">中1</button>
+              <button type="button" class="grade-button" data-grade="中2">中2</button>
+              <button type="button" class="grade-button" data-grade="中3">中3</button>
+            </div>
+          </section>
+          <section class="grade-group">
+            <h2 class="grade-group-title">その他</h2>
+            <div class="grade-buttons" role="group" aria-label="その他">
+              <button type="button" class="grade-button" data-grade="大人">大人</button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="primary-button" type="submit">追加</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="../src/firebase.js"></script>
+  <script src="../src/registration.js"></script>
+</body>
+</html>

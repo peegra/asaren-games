@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Players Tabs App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <h1>Players Tabs App</h1>
+    <div class="tabs" role="tablist">
+      <button class="tab-button" type="button" onclick="showRegistration()">登録画面</button>
+      <button class="tab-button" type="button" onclick="showList()">一覧画面</button>
+    </div>
+
+    <div id="content" class="content-frame">
+      <iframe src="registration.html" id="contentFrame" title="players-content"></iframe>
+    </div>
+  </main>
+
+  <script>
+    function showRegistration() {
+      document.getElementById('contentFrame').src = 'registration.html';
+    }
+
+    function showList() {
+      document.getElementById('contentFrame').src = 'list.html';
+    }
+  </script>
+</body>
+</html>

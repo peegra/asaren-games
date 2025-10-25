@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>選手一覧</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <h1>選手一覧</h1>
+    <p class="page-helper">登録済みのメンバーが下に表示されます。</p>
+    <div class="list-card">
+      <ul id="playersList" class="players-list" aria-live="polite"></ul>
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="../src/firebase.js"></script>
+  <script src="../src/list.js"></script>
+</body>
+</html>
