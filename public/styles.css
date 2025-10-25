@@ -171,40 +171,30 @@ button {
   box-shadow: var(--shadow-focus);
 }
 
-.grade-groups {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+  .grade-groups {
+    display: grid;
+    gap: 16px;
+  }
 
-.grade-group {
+.grade-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   background: rgba(37, 99, 235, 0.08);
   border-radius: var(--radius-md);
-  padding: 18px;
-}
-
-.grade-group-title {
-  font-size: clamp(1.3rem, 4vw, 1.6rem);
-  margin-bottom: 12px;
-  color: var(--color-primary-strong);
-}
-
-.grade-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 12px;
+  padding: 20px;
 }
 
 .grade-button {
-  padding: 0.9rem 1.3rem;
-  border-radius: 999px;
-  border: 1px solid rgba(37, 99, 235, 0.4);
-  background: rgba(255, 255, 255, 0.92);
+  padding: 1.15rem 1.5rem;
+  border-radius: 18px;
+  border: 2px solid rgba(37, 99, 235, 0.35);
+  background: #fff;
   font-weight: 700;
-  font-size: clamp(1.2rem, 4vw, 1.4rem);
+  font-size: clamp(1.4rem, 5vw, 1.6rem);
   color: var(--color-primary-strong);
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  min-height: 60px;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  min-height: 72px;
 }
 
 .grade-button:hover,
@@ -217,8 +207,8 @@ button {
 .grade-button.is-selected {
   background: var(--color-primary);
   color: #fff;
-  border-color: var(--color-primary);
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+  border-color: transparent;
+  box-shadow: 0 16px 32px rgba(37, 99, 235, 0.4);
 }
 
 .form-actions {
@@ -230,7 +220,7 @@ button {
 .primary-button,
 .secondary-button,
 .text-button {
-  border-radius: 999px;
+  border-radius: 18px;
   border: none;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -334,24 +324,23 @@ button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-height: 54px;
   width: 100%;
-  padding: 0.85rem 1.4rem;
-  border-radius: 999px;
-  border: 1px solid rgba(37, 99, 235, 0.35);
-  background: rgba(255, 255, 255, 0.95);
-  font-size: clamp(1.25rem, 4.2vw, 1.45rem);
+  padding: 1.05rem 1.5rem;
+  border-radius: 18px;
+  border: 2px solid rgba(37, 99, 235, 0.35);
+  background: #fff;
+  font-size: clamp(1.35rem, 4.6vw, 1.55rem);
   font-weight: 700;
   color: var(--color-primary-strong);
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-  min-height: 60px;
+  min-height: 72px;
 }
 
 .team-count-option input:checked + span {
   background: var(--color-primary);
   color: #fff;
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-focus);
+  border-color: transparent;
+  box-shadow: 0 16px 32px rgba(37, 99, 235, 0.4);
 }
 
 .team-count-option span:focus-visible {
@@ -558,6 +547,7 @@ button {
   .tabs {
     max-width: 960px;
     margin: clamp(16px, 4vw, 32px) auto clamp(20px, 4vw, 36px);
+    flex-direction: row;
   }
 
   .page {
@@ -585,6 +575,10 @@ button {
 
   .team-count-options {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .grade-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
   .team-actions {
@@ -629,5 +623,9 @@ button {
 
   .team-column {
     max-width: 880px;
+  }
+
+  .grade-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }

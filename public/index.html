@@ -27,40 +27,28 @@
         <div class="form-field grade-selector">
           <span class="fieldset-label">学年</span>
           <input type="hidden" id="grade">
-          <div class="grade-groups">
-            <section class="grade-group">
-              <h2 class="grade-group-title">小学生（低学年）</h2>
-              <div class="grade-buttons" role="group" aria-label="小学生（低学年）">
-                <button type="button" class="grade-button" data-grade="小1">小1</button>
-                <button type="button" class="grade-button" data-grade="小2">小2</button>
-                <button type="button" class="grade-button" data-grade="小3">小3</button>
-              </div>
-            </section>
-            <section class="grade-group">
-              <h2 class="grade-group-title">小学生（高学年）</h2>
-              <div class="grade-buttons" role="group" aria-label="小学生（高学年）">
-                <button type="button" class="grade-button" data-grade="小4">小4</button>
-                <button type="button" class="grade-button" data-grade="小5">小5</button>
-                <button type="button" class="grade-button" data-grade="小6">小6</button>
-              </div>
-            </section>
-            <section class="grade-group">
-              <h2 class="grade-group-title">中学生</h2>
-              <div class="grade-buttons" role="group" aria-label="中学生">
-                <button type="button" class="grade-button" data-grade="中1">中1</button>
-                <button type="button" class="grade-button" data-grade="中2">中2</button>
-                <button type="button" class="grade-button" data-grade="中3">中3</button>
-              </div>
-            </section>
-            <section class="grade-group">
-              <h2 class="grade-group-title">その他</h2>
-              <div class="grade-buttons" role="group" aria-label="その他">
-                <button type="button" class="grade-button" data-grade="大人">大人</button>
-              </div>
-            </section>
+        <div class="grade-groups">
+          <div class="grade-grid" role="group" aria-label="小学生（低学年）">
+            <button type="button" class="grade-button" data-grade="小1">小1</button>
+            <button type="button" class="grade-button" data-grade="小2">小2</button>
+            <button type="button" class="grade-button" data-grade="小3">小3</button>
+          </div>
+          <div class="grade-grid" role="group" aria-label="小学生（高学年）">
+            <button type="button" class="grade-button" data-grade="小4">小4</button>
+            <button type="button" class="grade-button" data-grade="小5">小5</button>
+            <button type="button" class="grade-button" data-grade="小6">小6</button>
+          </div>
+          <div class="grade-grid" role="group" aria-label="中学生">
+            <button type="button" class="grade-button" data-grade="中1">中1</button>
+            <button type="button" class="grade-button" data-grade="中2">中2</button>
+            <button type="button" class="grade-button" data-grade="中3">中3</button>
+          </div>
+          <div class="grade-grid" role="group" aria-label="その他">
+            <button type="button" class="grade-button" data-grade="大人">大人</button>
           </div>
         </div>
-        <div class="form-actions">
+      </div>
+      <div class="form-actions">
           <button class="primary-button" type="submit">追加</button>
         </div>
       </form>
