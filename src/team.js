@@ -30,7 +30,7 @@
     try {
       const stored = localStorage.getItem(TEAM_COUNT_STORAGE_KEY);
       const parsed = Number(stored);
-      if (parsed === 3) return 3;
+      if (parsed === 3 || parsed === 4) return parsed;
       return 2;
     } catch (error) {
       console.warn("チーム数の取得に失敗しました:", error);

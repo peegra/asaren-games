@@ -7,7 +7,7 @@
   function getStoredTeamCount() {
     try {
       const stored = localStorage.getItem(TEAM_COUNT_STORAGE_KEY);
-      return stored === "3" ? "3" : "2";
+      return stored === "3" || stored === "4" ? stored : "2";
     } catch (error) {
       console.warn("チーム数の取得に失敗しました:", error);
       return "2";

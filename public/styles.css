@@ -31,7 +31,7 @@ body {
   min-height: 100vh;
   background: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.8;
+  line-height: 1.6;
   font-size: clamp(1.1rem, 4vw, 1.3rem);
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -59,8 +59,8 @@ button {
 .app {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 18px 16px 32px;
+  gap: 12px;
+  padding: 12px 12px 24px;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
@@ -76,7 +76,7 @@ button {
 .tabs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
+  gap: 8px;
   width: 100%;
 }
 
@@ -86,8 +86,8 @@ button {
   align-items: center;
   justify-content: center;
   gap: clamp(0.6rem, 2.5vw, 1rem);
-  padding: clamp(1.6rem, 6vw, 2.3rem) 1.8rem;
-  border-radius: 999px;
+  padding: clamp(1.4rem, 5vw, 2rem) 1.6rem;
+  border-radius: var(--radius-lg);
   background: rgba(37, 99, 235, 0.12);
   border: none;
   color: var(--color-primary-strong);
@@ -96,7 +96,7 @@ button {
   letter-spacing: 0.01em;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  min-height: 150px;
+  min-height: 130px;
   width: 100%;
 }
 
@@ -118,8 +118,9 @@ button {
 }
 
 .tab-icon {
-  font-size: clamp(2.4rem, 6vw, 3.2rem);
-  line-height: 1;
+  width: clamp(44px, 7vw, 56px);
+  height: clamp(44px, 7vw, 56px);
+  display: block;
 }
 
 .tab-label {
@@ -130,8 +131,8 @@ button {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 24px 18px 32px;
+  gap: 16px;
+  padding: 20px 16px 24px;
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
@@ -153,7 +154,7 @@ button {
 .form-card {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .form-field {
@@ -229,7 +230,7 @@ button {
 .form-actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .form-actions .primary-button {
@@ -283,6 +284,7 @@ button {
 #teamSplitButton {
   font-size: clamp(2.2rem, 6vw, 2.7rem);
   padding-block: clamp(1.3rem, 4.5vw, 1.8rem);
+  width: 100%;
 }
 
 .text-button {
@@ -302,7 +304,7 @@ button {
 .list-actions {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
   align-items: stretch;
 }
@@ -312,7 +314,7 @@ button {
   flex-direction: column;
   gap: 14px;
   width: 100%;
-  padding: 18px 0;
+  padding: 14px 0;
   border-radius: var(--radius-md);
   background: rgba(37, 99, 235, 0.08);
 }
@@ -325,17 +327,18 @@ button {
 }
 
 .team-count-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
 }
 
 .team-count-option {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .team-count-option input {

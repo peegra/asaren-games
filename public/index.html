@@ -7,19 +7,41 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="app container-fluid px-3 px-md-4 py-4">
+  <main class="app">
     <h1>Players Tabs App</h1>
     <div class="tabs" role="tablist">
       <button id="tab-registration" class="tab-button is-active" type="button">
-        <span class="tab-icon" aria-hidden="true">📝</span>
+        <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="4" y="3" width="16" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"></rect>
+          <path d="M8 8h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M8 12h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M8 16h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
         <span class="tab-label">登録</span>
       </button>
       <button id="tab-list" class="tab-button" type="button">
-        <span class="tab-icon" aria-hidden="true">📋</span>
+        <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="4" y="3" width="16" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"></rect>
+          <path d="M8 9h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M8 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M8 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <circle cx="7" cy="9" r="1.2" fill="currentColor"></circle>
+          <circle cx="7" cy="13" r="1.2" fill="currentColor"></circle>
+          <circle cx="7" cy="17" r="1.2" fill="currentColor"></circle>
+        </svg>
         <span class="tab-label">一覧</span>
       </button>
       <button id="tab-team" class="tab-button" type="button">
-        <span class="tab-icon" aria-hidden="true">🏆</span>
+        <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M7 4h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M7 4v2a5 5 0 0 0 5 5h0a5 5 0 0 0 5-5V4" fill="none" stroke="currentColor" stroke-width="1.8"></path>
+          <path d="M9 15h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M12 11v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M9 19h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M8 21h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M7 6H5a2 2 0 0 0 2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          <path d="M17 6h2a2 2 0 0 1-2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
         <span class="tab-label">チーム</span>
       </button>
     </div>
@@ -77,6 +99,10 @@
             <label class="team-count-option">
               <input type="radio" name="teamCount" value="3">
               <span>3チーム</span>
+            </label>
+            <label class="team-count-option">
+              <input type="radio" name="teamCount" value="4">
+              <span>4チーム</span>
             </label>
           </div>
         </div>
