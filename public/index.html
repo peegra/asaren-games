@@ -83,11 +83,6 @@
       <p class="page-helper">最高のチーム分けが出来上がったよ！チーム分けはASARENの神様が作ったので文句は言えないよ！</p>
 
       <section id="teamBoard" class="team-board" aria-live="polite"></section>
-
-      <div class="team-actions">
-        <button class="secondary-button" type="button" id="reshuffleButton">再分けする</button>
-        <button class="text-button" type="button" id="backToListButton">一覧に戻る</button>
-      </div>
     </section>
   </main>
 
@@ -115,6 +110,9 @@
         section.classList.toggle('d-none', key !== target);
       });
       setActiveTab(target);
+      if (target === 'team' && typeof window.loadTeamsOnShow === 'function') {
+        window.loadTeamsOnShow();
+      }
       const tabsTop = document.querySelector('.tabs');
       if (tabsTop) {
         const { top } = tabsTop.getBoundingClientRect();
@@ -132,8 +130,6 @@
     tabs.registration.addEventListener('click', window.showRegistration);
     tabs.list.addEventListener('click', window.showList);
     tabs.team.addEventListener('click', window.showTeam);
-
-    document.getElementById('backToListButton').addEventListener('click', window.showList);
 
     showView('registration');
   </script>

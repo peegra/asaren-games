@@ -3,8 +3,6 @@
   const teamSplitButton = document.getElementById("teamSplitButton");
   const teamCountInputs = document.querySelectorAll('input[name="teamCount"]');
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
-  const TEAM_STATE_KEY = "teamState";
-  const TEAM_TRIGGER_KEY = "teamShuffleTrigger";
 
   function getStoredTeamCount() {
     try {
@@ -143,16 +141,17 @@
       const selected = Array.from(teamCountInputs).find(input => input.checked)?.value || "2";
       storeTeamCount(selected);
 
-      try {
-        localStorage.removeItem(TEAM_STATE_KEY);
-        localStorage.setItem(TEAM_TRIGGER_KEY, String(Date.now()));
-      } catch (error) {
-        console.warn("チーム状態更新の通知に失敗しました:", error);
-      }
+      const parentWindow = window.parent || window;
 
-      if (window.parent && typeof window.parent.showTeam === "function") {
-        window.parent.showTeam();
-      }
+      const shufflePromise = typeof parentWindow.forceTeamsShuffle === "function"
+        ? Promise.resolve(parentWindow.forceTeamsShuffle())
+        : Promise.resolve();
+
+      shufflePromise.finally(() => {
+        if (typeof parentWindow.showTeam === "function") {
+          parentWindow.showTeam();
+        }
+      });
     });
   }
 

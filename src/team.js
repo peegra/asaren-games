@@ -1,14 +1,15 @@
 (() => {
   const db = window.db || firebase.firestore();
   const teamBoard = document.getElementById("teamBoard");
-  const reshuffleButton = document.getElementById("reshuffleButton");
   const teamTitle = document.getElementById("teamTitle");
 
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
-  const TEAM_STATE_KEY = "teamState";
-  const TEAM_TRIGGER_KEY = "teamShuffleTrigger";
-  const TEAM_LABEL_FALLBACK = ["A", "B", "C", "D", "E"];
+  const TEAM_LABEL_FALLBACK = ["A", "B", "C", "D", "E", "F"];
   const TEAM_NAMES_URL = "/src/teamNames.json";
+  const TEAM_STATE_COLLECTION = "appState";
+  const TEAM_STATE_DOC_ID = "team";
+  const fallbackDocRef = () => db.collection(TEAM_STATE_COLLECTION).doc(TEAM_STATE_DOC_ID);
+
   const FALLBACK_NAMING = {
     categories: [
       {
@@ -19,7 +20,6 @@
   };
 
   let namingData = FALLBACK_NAMING;
-  let latestPlayers = [];
 
   if (!teamBoard) {
     console.warn("チーム表示エリアが見つかりませんでした。");
@@ -29,7 +29,9 @@
   function safeGetTeamCount() {
     try {
       const stored = localStorage.getItem(TEAM_COUNT_STORAGE_KEY);
-      return stored === "3" ? 3 : 2;
+      const parsed = Number(stored);
+      if (parsed === 3) return 3;
+      return 2;
     } catch (error) {
       console.warn("チーム数の取得に失敗しました:", error);
       return 2;
@@ -52,6 +54,29 @@
     return categories[Math.floor(Math.random() * categories.length)] || FALLBACK_NAMING.categories[0];
   }
 
+  function composeTeamState(players, teamCount) {
+    const category = getRandomCategory();
+    const names = getTeamNames(teamCount, category);
+    const buckets = Array.from({ length: teamCount }, () => []);
+    const shuffled = shuffle(players);
+
+    shuffled.forEach((player, index) => {
+      buckets[index % teamCount].push(player);
+    });
+
+    const teams = buckets.map((members, index) => ({
+      name: names[index] || `チーム ${TEAM_LABEL_FALLBACK[index] || index + 1}`,
+      members
+    }));
+
+    return {
+      teamCount,
+      categoryName: category.name,
+      teams,
+      createdAt: Date.now()
+    };
+  }
+
   function getTeamNames(teamCount, category) {
     const pool =
       category && Array.isArray(category.teams) && category.teams.length
@@ -68,58 +93,6 @@
     return Array.from({ length: teamCount }, (_, index) => shuffledNames[index]);
   }
 
-  function loadTeamState() {
-    try {
-      const stored = localStorage.getItem(TEAM_STATE_KEY);
-      return stored ? JSON.parse(stored) : null;
-    } catch (error) {
-      console.warn("チーム状態の取得に失敗しました:", error);
-      return null;
-    }
-  }
-
-  function saveTeamState(state) {
-    try {
-      localStorage.setItem(TEAM_STATE_KEY, JSON.stringify(state));
-    } catch (error) {
-      console.warn("チーム状態の保存に失敗しました:", error);
-    }
-  }
-
-  function createTeamState(teamCount) {
-    const category = getRandomCategory();
-    return {
-      categoryName: category.name,
-      names: getTeamNames(teamCount, category)
-    };
-  }
-
-  function ensureTeamState(teamCount, forceNew = false) {
-    let state = null;
-
-    if (!forceNew) {
-      state = loadTeamState();
-      if (state && typeof state.categoryName === "string" && Array.isArray(state.names)) {
-        if (state.names.length < teamCount) {
-          const additional = [];
-          for (let i = state.names.length; i < teamCount; i += 1) {
-            additional.push(`チーム ${TEAM_LABEL_FALLBACK[i] || i + 1}`);
-          }
-          state.names = state.names.concat(additional);
-          saveTeamState(state);
-        } else if (state.names.length > teamCount) {
-          state.names = state.names.slice(0, teamCount);
-          saveTeamState(state);
-        }
-        return state;
-      }
-    }
-
-    state = createTeamState(teamCount);
-    saveTeamState(state);
-    return state;
-  }
-
   function renderEmptyState() {
     teamBoard.innerHTML = "";
     const emptyContainer = document.createElement("div");
@@ -132,94 +105,123 @@
     }
   }
 
-  function createTeamColumn(teamName, players) {
-    const column = document.createElement("article");
-    column.className = "team-column";
-
-    const header = document.createElement("header");
-    header.className = "team-header";
-
-    const title = document.createElement("h2");
-    title.textContent = teamName;
-    header.appendChild(title);
-
-    const list = document.createElement("ul");
-    list.className = "team-list";
-
-    if (!players.length) {
-      const emptyItem = document.createElement("li");
-      emptyItem.className = "team-player empty";
-      emptyItem.textContent = "メンバーがいません";
-      list.appendChild(emptyItem);
-    } else {
-      players.forEach(player => {
-        const li = document.createElement("li");
-        li.className = "team-player";
-        li.textContent = player.grade ? `${player.name}（${player.grade}）` : player.name;
-        list.appendChild(li);
-      });
-    }
-
-    column.appendChild(header);
-    column.appendChild(list);
-    return column;
-  }
-
-  function renderTeams(players, options = {}) {
-    const teamCount = safeGetTeamCount();
-
-    if (!players.length) {
+  function renderState(state) {
+    if (!state || !Array.isArray(state.teams) || state.teams.length === 0) {
       renderEmptyState();
       return;
     }
 
     teamBoard.innerHTML = "";
-
-    const teamState = ensureTeamState(teamCount, options.forceNew);
-    const shuffledPlayers = shuffle(players);
-    const buckets = Array.from({ length: teamCount }, () => []);
-
-    shuffledPlayers.forEach((player, index) => {
-      buckets[index % teamCount].push(player);
-    });
-
-    const teamNames = teamState.names.slice(0, teamCount);
     const fragment = document.createDocumentFragment();
 
-    buckets.forEach((bucket, index) => {
-      const fallbackName = `チーム ${TEAM_LABEL_FALLBACK[index] || index + 1}`;
-      fragment.appendChild(createTeamColumn(teamNames[index] || fallbackName, bucket));
+    state.teams.forEach(team => {
+      const column = document.createElement("article");
+      column.className = "team-column";
+
+      const header = document.createElement("header");
+      header.className = "team-header";
+      const title = document.createElement("h2");
+      title.textContent = team.name;
+      header.appendChild(title);
+
+      const list = document.createElement("ul");
+      list.className = "team-list";
+
+      if (!team.members || team.members.length === 0) {
+        const emptyItem = document.createElement("li");
+        emptyItem.className = "team-player empty";
+        emptyItem.textContent = "メンバーがいません";
+        list.appendChild(emptyItem);
+      } else {
+        team.members.forEach(member => {
+          const li = document.createElement("li");
+          li.className = "team-player";
+          li.textContent = member.grade ? `${member.name}（${member.grade}）` : member.name;
+          list.appendChild(li);
+        });
+      }
+
+      column.appendChild(header);
+      column.appendChild(list);
+      fragment.appendChild(column);
     });
 
-    if (teamTitle) {
-      teamTitle.textContent = `${teamState.categoryName}カップ`;
-    }
-
     teamBoard.appendChild(fragment);
+
+    if (teamTitle) {
+      teamTitle.textContent = `${state.categoryName}カップ`;
+    }
   }
 
-  function loadParticipatingPlayers() {
-    db.collection("players")
-      .where("participating", "==", true)
-      .get()
-      .then(snapshot => {
-        const players = [];
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          players.push({
-            id: doc.id,
-            name: data.name,
-            grade: data.grade || ""
-          });
-        });
+  async function fetchTeamStateFromDb() {
+    try {
+      const snap = await fallbackDocRef().get();
+      if (!snap.exists) {
+        return null;
+      }
+      return snap.data();
+    } catch (error) {
+      console.warn("チーム状態の取得に失敗しました:", error);
+      return null;
+    }
+  }
 
-        latestPlayers = players;
-        renderTeams(players);
-      })
-      .catch(error => {
-        console.error("チーム分けの取得に失敗しました:", error);
-        renderEmptyState();
+  async function saveTeamStateToDb(state) {
+    try {
+      await fallbackDocRef().set(state);
+    } catch (error) {
+      console.warn("チーム状態の保存に失敗しました:", error);
+    }
+  }
+
+  async function fetchParticipatingPlayers() {
+    const snapshot = await db.collection("players").where("participating", "==", true).get();
+    const players = [];
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      players.push({
+        id: doc.id,
+        name: data.name,
+        grade: data.grade || "",
+        participating: true
       });
+    });
+    return players;
+  }
+
+  async function generateAndPersistState(teamCount) {
+    const players = await fetchParticipatingPlayers();
+    if (!players.length) {
+      renderEmptyState();
+      await saveTeamStateToDb({
+        teamCount,
+        categoryName: "",
+        teams: [],
+        createdAt: Date.now()
+      });
+      return;
+    }
+
+    const state = composeTeamState(players, teamCount);
+    await saveTeamStateToDb(state);
+    renderState(state);
+  }
+
+  async function showCurrentState({ forceNew = false } = {}) {
+    const teamCount = safeGetTeamCount();
+
+    if (forceNew) {
+      await generateAndPersistState(teamCount);
+      return;
+    }
+
+    const storedState = await fetchTeamStateFromDb();
+    if (storedState && Array.isArray(storedState.teams) && storedState.teams.length) {
+      renderState(storedState);
+      return;
+    }
+
+    await generateAndPersistState(teamCount);
   }
 
   function loadNamingData() {
@@ -234,9 +236,7 @@
         if (
           data &&
           Array.isArray(data.categories) &&
-          data.categories.every(
-            entry => entry && typeof entry.name === "string" && Array.isArray(entry.teams) && entry.teams.length
-          )
+          data.categories.every(entry => entry && typeof entry.name === "string" && Array.isArray(entry.teams) && entry.teams.length)
         ) {
           namingData = data;
         } else {
@@ -250,33 +250,13 @@
       });
   }
 
-  function reshuffleTeams({ forceNew = false, broadcast = false } = {}) {
-    if (latestPlayers.length) {
-      renderTeams(latestPlayers, { forceNew });
-    } else {
-      loadParticipatingPlayers();
-    }
+  window.loadTeamsOnShow = force => {
+    return showCurrentState({ forceNew: Boolean(force) });
+  };
 
-    if (broadcast) {
-      try {
-        localStorage.setItem(TEAM_TRIGGER_KEY, String(Date.now()));
-      } catch (error) {
-        console.warn("チーム更新通知の送信に失敗しました:", error);
-      }
-    }
-  }
+  window.forceTeamsShuffle = () => {
+    return showCurrentState({ forceNew: true });
+  };
 
-  if (reshuffleButton) {
-    reshuffleButton.addEventListener("click", () => {
-      reshuffleTeams({ forceNew: true, broadcast: true });
-    });
-  }
-
-  window.addEventListener("storage", event => {
-    if (event.key === TEAM_TRIGGER_KEY) {
-      reshuffleTeams({ forceNew: true });
-    }
-  });
-
-  loadNamingData().finally(loadParticipatingPlayers);
+  loadNamingData().finally(() => showCurrentState({ forceNew: false }));
 })();
