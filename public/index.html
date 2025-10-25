@@ -105,13 +105,13 @@
       });
     }
 
-    function showView(target) {
+    function showView(target, force = false) {
       Object.entries(views).forEach(([key, section]) => {
         section.classList.toggle('d-none', key !== target);
       });
       setActiveTab(target);
       if (target === 'team' && typeof window.loadTeamsOnShow === 'function') {
-        window.loadTeamsOnShow();
+        window.loadTeamsOnShow(force);
       }
       const tabsTop = document.querySelector('.tabs');
       if (tabsTop) {
@@ -125,11 +125,11 @@
     window.showView = showView;
     window.showRegistration = () => showView('registration');
     window.showList = () => showView('list');
-    window.showTeam = () => showView('team');
+    window.showTeam = (force = false) => showView('team', force);
 
     tabs.registration.addEventListener('click', window.showRegistration);
     tabs.list.addEventListener('click', window.showList);
-    tabs.team.addEventListener('click', window.showTeam);
+    tabs.team.addEventListener('click', () => window.showTeam());
 
     showView('registration');
   </script>

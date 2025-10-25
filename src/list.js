@@ -143,15 +143,15 @@
 
       const parentWindow = window.parent || window;
 
-      const shufflePromise = typeof parentWindow.forceTeamsShuffle === "function"
-        ? Promise.resolve(parentWindow.forceTeamsShuffle())
-        : Promise.resolve();
-
-      shufflePromise.finally(() => {
-        if (typeof parentWindow.showTeam === "function") {
-          parentWindow.showTeam();
-        }
-      });
+      if (typeof parentWindow.forceTeamsShuffle === "function") {
+        Promise.resolve(parentWindow.forceTeamsShuffle()).finally(() => {
+          if (typeof parentWindow.showTeam === "function") {
+            parentWindow.showTeam(true);
+          }
+        });
+      } else if (typeof parentWindow.showTeam === "function") {
+        parentWindow.showTeam(true);
+      }
     });
   }
 
