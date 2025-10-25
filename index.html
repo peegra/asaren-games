@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Players Tabs App</title>
+  <meta http-equiv="refresh" content="0; url=public/index.html">
+  <script>
+    (function () {
+      var target = "public/index.html";
+      if (window.location.search) {
+        target += window.location.search;
+      }
+      if (window.location.hash) {
+        target += window.location.hash;
+      }
+      window.location.replace(target);
+    })();
+  </script>
+</head>
+<body>
+  <p>ブラウザが自動的に遷移しない場合は、<a href="public/index.html">こちらをクリック</a>してください。</p>
+</body>
+</html>
