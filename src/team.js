@@ -5,6 +5,8 @@
   const teamTitle = document.getElementById("teamTitle");
 
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
+  const TEAM_STATE_KEY = "teamState";
+  const TEAM_TRIGGER_KEY = "teamShuffleTrigger";
   const TEAM_LABEL_FALLBACK = ["A", "B", "C", "D", "E"];
   const TEAM_NAMES_URL = "/src/teamNames.json";
   const FALLBACK_NAMING = {
@@ -66,6 +68,58 @@
     return Array.from({ length: teamCount }, (_, index) => shuffledNames[index]);
   }
 
+  function loadTeamState() {
+    try {
+      const stored = localStorage.getItem(TEAM_STATE_KEY);
+      return stored ? JSON.parse(stored) : null;
+    } catch (error) {
+      console.warn("チーム状態の取得に失敗しました:", error);
+      return null;
+    }
+  }
+
+  function saveTeamState(state) {
+    try {
+      localStorage.setItem(TEAM_STATE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.warn("チーム状態の保存に失敗しました:", error);
+    }
+  }
+
+  function createTeamState(teamCount) {
+    const category = getRandomCategory();
+    return {
+      categoryName: category.name,
+      names: getTeamNames(teamCount, category)
+    };
+  }
+
+  function ensureTeamState(teamCount, forceNew = false) {
+    let state = null;
+
+    if (!forceNew) {
+      state = loadTeamState();
+      if (state && typeof state.categoryName === "string" && Array.isArray(state.names)) {
+        if (state.names.length < teamCount) {
+          const additional = [];
+          for (let i = state.names.length; i < teamCount; i += 1) {
+            additional.push(`チーム ${TEAM_LABEL_FALLBACK[i] || i + 1}`);
+          }
+          state.names = state.names.concat(additional);
+          saveTeamState(state);
+        } else if (state.names.length > teamCount) {
+          state.names = state.names.slice(0, teamCount);
+          saveTeamState(state);
+        }
+        return state;
+      }
+    }
+
+    state = createTeamState(teamCount);
+    saveTeamState(state);
+    return state;
+  }
+
   function renderEmptyState() {
     teamBoard.innerHTML = "";
     const emptyContainer = document.createElement("div");
@@ -87,13 +141,7 @@
 
     const title = document.createElement("h2");
     title.textContent = teamName;
-
-    const count = document.createElement("span");
-    count.className = "team-count";
-    count.textContent = `${players.length} 人`;
-
     header.appendChild(title);
-    header.appendChild(count);
 
     const list = document.createElement("ul");
     list.className = "team-list";
@@ -117,7 +165,7 @@
     return column;
   }
 
-  function renderTeams(players) {
+  function renderTeams(players, options = {}) {
     const teamCount = safeGetTeamCount();
 
     if (!players.length) {
@@ -127,6 +175,7 @@
 
     teamBoard.innerHTML = "";
 
+    const teamState = ensureTeamState(teamCount, options.forceNew);
     const shuffledPlayers = shuffle(players);
     const buckets = Array.from({ length: teamCount }, () => []);
 
@@ -134,8 +183,7 @@
       buckets[index % teamCount].push(player);
     });
 
-    const category = getRandomCategory();
-    const teamNames = getTeamNames(teamCount, category);
+    const teamNames = teamState.names.slice(0, teamCount);
     const fragment = document.createDocumentFragment();
 
     buckets.forEach((bucket, index) => {
@@ -144,7 +192,7 @@
     });
 
     if (teamTitle) {
-      teamTitle.textContent = `${category.name}チーム`;
+      teamTitle.textContent = `${teamState.categoryName}チーム`;
     }
 
     teamBoard.appendChild(fragment);
@@ -202,21 +250,31 @@
       });
   }
 
-  function reshuffleTeams() {
+  function reshuffleTeams({ forceNew = false, broadcast = false } = {}) {
     if (latestPlayers.length) {
-      renderTeams(latestPlayers);
+      renderTeams(latestPlayers, { forceNew });
     } else {
       loadParticipatingPlayers();
+    }
+
+    if (broadcast) {
+      try {
+        localStorage.setItem(TEAM_TRIGGER_KEY, String(Date.now()));
+      } catch (error) {
+        console.warn("チーム更新通知の送信に失敗しました:", error);
+      }
     }
   }
 
   if (reshuffleButton) {
-    reshuffleButton.addEventListener("click", reshuffleTeams);
+    reshuffleButton.addEventListener("click", () => {
+      reshuffleTeams({ forceNew: true, broadcast: true });
+    });
   }
 
   window.addEventListener("storage", event => {
-    if (event.key === TEAM_COUNT_STORAGE_KEY) {
-      reshuffleTeams();
+    if (event.key === TEAM_TRIGGER_KEY) {
+      reshuffleTeams({ forceNew: true });
     }
   });
 

@@ -159,7 +159,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 16px 0;
   border-radius: var(--radius-md);
   background: rgba(37, 99, 235, 0.08);
   width: min(100%, 520px);
@@ -173,11 +173,13 @@ button {
 
 .team-count-options {
   display: inline-flex;
-  gap: 10px;
-  padding: 4px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 999px;
-  border: 1px solid rgba(37, 99, 235, 0.25);
+  gap: 12px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .team-count-option {
@@ -197,13 +199,15 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 88px;
-  padding: 0.45rem 0.9rem;
+  min-width: 110px;
+  padding: 0.85rem 1.35rem;
   line-height: 1.1;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--color-primary);
+  font-size: clamp(1.25rem, 4.2vw, 1.45rem);
+  color: var(--color-primary-strong);
+  border: 1px solid rgba(37, 99, 235, 0.4);
+  background: rgba(255, 255, 255, 0.9);
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
@@ -212,6 +216,7 @@ button {
   background: var(--color-primary);
   color: #fff;
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+  border-color: var(--color-primary);
 }
 
 .team-count-option span:focus-visible {
@@ -375,7 +380,7 @@ input[type="tel"]:focus {
 }
 
 .secondary-button {
-  padding: 0.75rem 1.8rem;
+  padding: 1rem 2.4rem;
   border-radius: 999px;
   background: rgba(37, 99, 235, 0.12);
   color: var(--color-primary-strong);
@@ -383,6 +388,7 @@ input[type="tel"]:focus {
   border: 1px solid rgba(37, 99, 235, 0.25);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: clamp(1.1rem, 3.6vw, 1.3rem);
 }
 
 .secondary-button:hover,
@@ -537,8 +543,8 @@ input[type="tel"]:focus {
 
 .team-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: clamp(16px, 4vw, 28px);
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 5vw, 28px);
   margin-top: clamp(24px, 6vw, 36px);
 }
 
@@ -549,24 +555,20 @@ input[type="tel"]:focus {
   padding: clamp(18px, 4vw, 28px);
   display: grid;
   gap: clamp(14px, 3vw, 20px);
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .team-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
+  text-align: center;
 }
 
 .team-header h2 {
   margin: 0;
-  font-size: clamp(1.35rem, 4.2vw, 1.6rem);
+  font-size: clamp(1.5rem, 4.4vw, 1.8rem);
   color: var(--color-primary-strong);
-}
-
-.team-count {
-  font-size: clamp(1.05rem, 3.2vw, 1.2rem);
-  color: var(--color-muted);
-  font-weight: 600;
 }
 
 .team-list {
@@ -692,9 +694,16 @@ input[type="tel"]:focus {
     width: 100%;
   }
 
+  .team-count-options {
+    width: 100%;
+    flex-direction: column;
+  }
+
   .team-count-option span {
-    min-width: 120px;
-    font-size: 1rem;
+    min-width: 100%;
+    justify-content: center;
+    font-size: clamp(1.2rem, 5vw, 1.35rem);
+    padding: 0.9rem 1.4rem;
   }
 
   .team-column {
