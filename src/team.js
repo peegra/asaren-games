@@ -321,8 +321,12 @@
       });
   }
 
-  window.loadTeamsOnShow = force => {
-    return showCurrentState({ forceNew: Boolean(force) });
+  window.loadTeamsOnShow = options => {
+    const regenerate =
+      options && typeof options === "object"
+        ? Boolean(options.regenerate)
+        : Boolean(options);
+    return showCurrentState({ forceNew: regenerate });
   };
 
   window.forceTeamsShuffle = () => {

@@ -143,7 +143,22 @@
       });
     }
 
-    function showView(target, force = false) {
+    function normalizeShowOptions(options) {
+      if (options && typeof options === 'object') {
+        return {
+          animate: Boolean(options.animate),
+          regenerate: Boolean(options.regenerate)
+        };
+      }
+      const flag = Boolean(options);
+      return {
+        animate: flag,
+        regenerate: flag
+      };
+    }
+
+    function showView(target, options = {}) {
+      const { animate, regenerate } = normalizeShowOptions(options);
       Object.entries(views).forEach(([key, section]) => {
         section.classList.toggle('d-none', key !== target);
       });
@@ -153,7 +168,7 @@
       }
       if (target === 'team') {
         const teamSection = views.team;
-        if (force) {
+        if (animate) {
           teamSection.classList.remove('is-descending');
           void teamSection.offsetWidth;
           teamSection.classList.add('is-descending');
@@ -165,7 +180,7 @@
           }, 2400);
         }
         if (typeof window.loadTeamsOnShow === 'function') {
-          window.loadTeamsOnShow(force);
+          window.loadTeamsOnShow({ regenerate });
         }
       }
       const tabsTop = document.querySelector('.tabs');
@@ -180,7 +195,7 @@
     window.showView = showView;
     window.showRegistration = () => showView('registration');
     window.showList = () => showView('list');
-    window.showTeam = (force = false) => showView('team', force);
+    window.showTeam = options => showView('team', options);
 
     tabs.registration.addEventListener('click', window.showRegistration);
     tabs.list.addEventListener('click', window.showList);

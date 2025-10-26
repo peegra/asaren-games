@@ -341,11 +341,11 @@
       if (typeof parentWindow.forceTeamsShuffle === "function") {
         Promise.resolve(parentWindow.forceTeamsShuffle()).finally(() => {
           if (typeof parentWindow.showTeam === "function") {
-            parentWindow.showTeam(true);
+            parentWindow.showTeam({ animate: true });
           }
         });
       } else if (typeof parentWindow.showTeam === "function") {
-        parentWindow.showTeam(true);
+        parentWindow.showTeam({ animate: true, regenerate: true });
       }
     });
   }
