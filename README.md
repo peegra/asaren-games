@@ -1,4 +1,4 @@
-# Players Tabs App
+# ASAREN 神わけアプリ
 
 選手の登録と一覧表示をタブで切り替えられるウェブアプリケーションです。Firebase Firestoreを使用してデータを管理します。
 
