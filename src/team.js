@@ -9,6 +9,19 @@
   const TEAM_STATE_COLLECTION = "appState";
   const TEAM_STATE_DOC_ID = "team";
   const fallbackDocRef = () => db.collection(TEAM_STATE_COLLECTION).doc(TEAM_STATE_DOC_ID);
+  const GRADE_POINTS = {
+    "小1": 1,
+    "小2": 2,
+    "小3": 3,
+    "小4": 4,
+    "小5": 5,
+    "小6": 6,
+    "中1": 7,
+    "中2": 8,
+    "中3": 9,
+    "大人": 10
+  };
+  const DEFAULT_GRADE_POINTS = 5;
 
   const FALLBACK_NAMING = {
     categories: [
@@ -58,10 +71,26 @@
     const category = getRandomCategory();
     const names = getTeamNames(teamCount, category);
     const buckets = Array.from({ length: teamCount }, () => []);
+    const bucketScores = Array.from({ length: teamCount }, () => 0);
     const shuffled = shuffle(players);
+    const scoredPlayers = shuffled
+      .map(player => ({
+        data: player,
+        score: GRADE_POINTS[player.grade] ?? DEFAULT_GRADE_POINTS
+      }))
+      .sort((a, b) => b.score - a.score);
 
-    shuffled.forEach((player, index) => {
-      buckets[index % teamCount].push(player);
+    scoredPlayers.forEach(({ data, score }) => {
+      let targetIndex = 0;
+      let minScore = bucketScores[0];
+      for (let i = 1; i < teamCount; i += 1) {
+        if (bucketScores[i] < minScore) {
+          minScore = bucketScores[i];
+          targetIndex = i;
+        }
+      }
+      buckets[targetIndex].push(data);
+      bucketScores[targetIndex] += score;
     });
 
     const teams = buckets.map((members, index) => ({
