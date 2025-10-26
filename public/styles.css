@@ -394,10 +394,24 @@ button {
 
 .team-entry-button {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.8rem, 3vw, 1.4rem);
+  gap: clamp(0.8rem, 3vw, 1.2rem);
   width: 100%;
+  padding: clamp(1.6rem, 5vw, 2.6rem) clamp(1.2rem, 4vw, 2rem);
+  text-align: center;
+}
+
+.team-entry-image {
+  width: clamp(360px, 80vw, 540px);
+  height: clamp(360px, 80vw, 540px);
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.team-entry-label {
+  font-weight: 700;
 }
 
 .team-entry-count {
