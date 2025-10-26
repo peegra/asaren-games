@@ -78,6 +78,7 @@ button {
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 8px;
   width: 100%;
+  margin: 2px 0 6px;
 }
 
 .tab-button {
@@ -312,11 +313,13 @@ button {
 .team-settings {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  padding: 14px 0;
+  padding: 0;
   border-radius: var(--radius-md);
-  background: rgba(37, 99, 235, 0.08);
+  background: transparent;
+  border: none;
+  margin: 0;
 }
 
 .team-settings-label {
@@ -324,13 +327,18 @@ button {
   color: var(--color-muted);
   font-weight: 600;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-.team-count-options {
+.team-count-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 14px;
   width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  background: rgba(37, 99, 235, 0.08);
+  border-radius: var(--radius-md);
+  padding: 20px;
 }
 
 .team-count-option {
@@ -562,7 +570,7 @@ button {
 
   .tabs {
     max-width: 960px;
-    margin: clamp(16px, 4vw, 32px) auto clamp(20px, 4vw, 36px);
+    margin: clamp(8px, 2vw, 16px) auto clamp(12px, 3vw, 20px);
     flex-direction: row;
   }
 
@@ -584,13 +592,14 @@ button {
   }
 
   .team-settings {
-    width: min(100%, 560px);
-    margin: 0 auto;
-    padding: 22px 24px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
-  .team-count-options {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  .team-count-grid {
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
   .grade-grid {
@@ -622,6 +631,10 @@ button {
   }
 
   .grade-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .team-count-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
