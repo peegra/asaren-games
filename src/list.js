@@ -60,7 +60,7 @@
 
   function updateEntryCountDisplay(value) {
     if (teamEntryCountDisplay) {
-      teamEntryCountDisplay.textContent = `(${value}人)`;
+      teamEntryCountDisplay.textContent = `エントリー数：${value}人`;
     }
   }
 
