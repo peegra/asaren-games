@@ -187,7 +187,7 @@
         team.members.forEach(member => {
           const li = document.createElement("li");
           li.className = "team-player";
-          li.textContent = member.grade ? `${member.name}（${member.grade}）` : member.name;
+          li.textContent = member.name;
           list.appendChild(li);
         });
       }
