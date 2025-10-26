@@ -1,18 +1,18 @@
 :root {
-  --color-bg: #040507;
-  --color-surface: #10121a;
-  --color-primary: #f97316;
-  --color-primary-strong: #ef4444;
-  --color-accent: #38bdf8;
-  --color-accent-strong: #0ea5e9;
-  --color-text: #f9fafb;
-  --color-muted: #9ca3af;
+  --color-bg: #03000f;
+  --color-surface: rgba(10, 12, 28, 0.72);
+  --color-primary: #ff3dfc;
+  --color-primary-strong: #ff6bff;
+  --color-accent: #14f1ff;
+  --color-accent-strong: #38fdfc;
+  --color-text: #e8faff;
+  --color-muted: #8ab7d4;
   --radius-lg: 18px;
   --radius-md: 14px;
   --radius-sm: 10px;
-  --shadow-soft: 0 22px 48px rgba(249, 115, 22, 0.18);
-  --shadow-card: 0 16px 42px rgba(15, 23, 42, 0.4);
-  --shadow-focus: 0 0 0 4px rgba(56, 189, 248, 0.35);
+  --shadow-soft: 0 24px 58px rgba(255, 61, 252, 0.2);
+  --shadow-card: 0 20px 50px rgba(4, 12, 45, 0.6);
+  --shadow-focus: 0 0 0 4px rgba(20, 241, 255, 0.45);
 }
 
 *,
@@ -30,8 +30,9 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(140% 140% at 50% -20%, rgba(249, 115, 22, 0.28), transparent 55%),
-    radial-gradient(120% 120% at 90% 0%, rgba(56, 189, 248, 0.25), transparent 45%),
+    radial-gradient(140% 140% at 10% -30%, rgba(147, 51, 234, 0.38), transparent 55%),
+    radial-gradient(120% 120% at 90% 0%, rgba(20, 241, 255, 0.32), transparent 48%),
+    radial-gradient(160% 160% at 50% 110%, rgba(255, 61, 252, 0.24), transparent 60%),
     var(--color-bg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -65,11 +66,12 @@ button {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 20px 20px 32px;
+  padding: 24px 24px 36px;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
   flex: 1;
+  position: relative;
 }
 
 .app-logo {
@@ -82,7 +84,7 @@ button {
 .app-logo img {
   width: clamp(240px, 45vw, 420px);
   height: auto;
-  filter: drop-shadow(0 18px 28px rgba(249, 115, 22, 0.35));
+  filter: drop-shadow(0 18px 36px rgba(255, 61, 252, 0.45));
 }
 
 .tabs {
@@ -101,23 +103,25 @@ button {
   gap: clamp(0.6rem, 2.5vw, 1rem);
   padding: clamp(1.4rem, 5vw, 2rem) 1.6rem;
   border-radius: var(--radius-lg);
-  background: rgba(249, 115, 22, 0.14);
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  background: rgba(14, 18, 34, 0.4);
+  border: 1px solid rgba(255, 61, 252, 0.35);
   color: var(--color-text);
   font-weight: 700;
   font-size: clamp(1.05rem, 4vw, 1.2rem);
   letter-spacing: 0.01em;
-  box-shadow: 0 10px 22px rgba(249, 115, 22, 0.16);
+  box-shadow: 0 12px 26px rgba(255, 61, 252, 0.18);
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   min-height: 130px;
   width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .tab-button.is-active {
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.9), rgba(239, 68, 68, 0.85));
+  background: linear-gradient(135deg, rgba(255, 61, 252, 0.85), rgba(20, 241, 255, 0.85));
   color: #fff;
-  box-shadow: 0 18px 36px rgba(239, 68, 68, 0.45);
-  border-color: transparent;
+  box-shadow: 0 22px 44px rgba(255, 61, 252, 0.38);
+  border-color: rgba(20, 241, 255, 0.45);
 }
 
 .tab-button:hover,
@@ -125,6 +129,7 @@ button {
   transform: translateY(-2px);
   box-shadow: var(--shadow-focus);
   outline: none;
+  border-color: rgba(20, 241, 255, 0.55);
 }
 
 .tab-button:active {
@@ -139,6 +144,7 @@ button {
 
 .tab-label {
   font-size: clamp(1.25rem, 4.4vw, 1.5rem);
+  text-shadow: 0 0 14px rgba(255, 61, 252, 0.32);
 }
 
 .page {
@@ -146,17 +152,19 @@ button {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 28px 24px 36px;
-  background: var(--color-surface);
+  padding: 32px 28px 40px;
+  background: linear-gradient(145deg, rgba(13, 15, 39, 0.9), rgba(17, 8, 34, 0.65));
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   flex: 1;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 61, 252, 0.25);
+  backdrop-filter: blur(18px);
 }
 
 .page > h1 {
-  font-size: clamp(1.9rem, 6vw, 2.5rem);
+  font-size: clamp(3.2rem, 10vw, 4.8rem);
   text-align: center;
+  text-shadow: 0 0 18px rgba(20, 241, 255, 0.4);
 }
 
 .page-helper {
@@ -211,17 +219,17 @@ button {
   display: grid;
   gap: 14px;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  background: rgba(249, 115, 22, 0.14);
+  background: linear-gradient(135deg, rgba(255, 61, 252, 0.18), rgba(20, 241, 255, 0.18));
   border-radius: var(--radius-md);
   padding: 20px;
-  border: 1px solid rgba(249, 115, 22, 0.25);
+  border: 1px solid rgba(255, 61, 252, 0.32);
 }
 
 .grade-button {
   padding: clamp(1.3rem, 4.5vw, 1.8rem) 1.4rem;
   border-radius: 18px;
-  border: 2px solid rgba(249, 115, 22, 0.35);
-  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(20, 241, 255, 0.45);
+  background: rgba(6, 10, 28, 0.6);
   font-weight: 700;
   font-size: clamp(2.1rem, 6vw, 2.6rem);
   color: var(--color-text);
@@ -233,14 +241,14 @@ button {
 .grade-button:focus {
   transform: translateY(-2px);
   outline: none;
-  box-shadow: 0 16px 34px rgba(249, 115, 22, 0.35);
+  box-shadow: 0 20px 38px rgba(20, 241, 255, 0.45);
 }
 
 .grade-button.is-selected {
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(239, 68, 68, 0.85));
+  background: linear-gradient(135deg, rgba(255, 61, 252, 0.95), rgba(20, 241, 255, 0.9));
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 20px 44px rgba(249, 115, 22, 0.45);
+  box-shadow: 0 24px 48px rgba(255, 61, 252, 0.45);
 }
 
 .form-actions {
@@ -271,6 +279,7 @@ button {
   font-size: clamp(2.1rem, 6vw, 2.6rem);
   box-shadow: 0 16px 38px rgba(14, 165, 233, 0.42);
   min-height: clamp(64px, 12vw, 88px);
+  text-shadow: 0 0 14px rgba(20, 241, 255, 0.45);
 }
 
 .primary-button:hover,
@@ -282,16 +291,17 @@ button {
 
 .secondary-button {
   padding: clamp(1.3rem, 4.5vw, 1.8rem) 2.4rem;
-  background: rgba(249, 115, 22, 0.16);
+  background: rgba(255, 61, 252, 0.16);
   color: var(--color-text);
-  border: 1px solid rgba(249, 115, 22, 0.32);
+  border: 1px solid rgba(255, 61, 252, 0.35);
   font-size: clamp(2.1rem, 6vw, 2.6rem);
   min-height: clamp(64px, 12vw, 88px);
+  text-shadow: 0 0 14px rgba(255, 61, 252, 0.35);
 }
 
 .secondary-button:hover,
 .secondary-button:focus {
-  background: rgba(249, 115, 22, 0.24);
+  background: rgba(255, 61, 252, 0.28);
   transform: translateY(-2px);
   outline: none;
   box-shadow: var(--shadow-focus);
@@ -339,18 +349,20 @@ button {
 
 .team-settings-label {
   font-size: clamp(1.1rem, 3.8vw, 1.3rem);
-  color: var(--color-muted);
+  color: var(--color-accent);
   font-weight: 600;
   text-align: center;
   margin: 0;
   padding: 0;
+  text-shadow: 0 0 12px rgba(20, 241, 255, 0.32);
 }
 
 .page-note {
-  font-size: clamp(1.1rem, 3.8vw, 1.3rem);
-  color: var(--color-muted);
+  font-size: clamp(1.2rem, 3.8vw, 1.6rem);
+  color: var(--color-accent);
   text-align: center;
   margin: 0;
+  text-shadow: 0 0 14px rgba(20, 241, 255, 0.35);
 }
 
 .team-count-grid {
@@ -358,10 +370,10 @@ button {
   gap: 14px;
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  background: rgba(249, 115, 22, 0.14);
+  background: linear-gradient(135deg, rgba(255, 61, 252, 0.18), rgba(20, 241, 255, 0.18));
   border-radius: var(--radius-md);
   padding: 20px;
-  border: 1px solid rgba(249, 115, 22, 0.25);
+  border: 1px solid rgba(255, 61, 252, 0.32);
 }
 
 .team-count-option {
@@ -387,20 +399,21 @@ button {
   height: 100%;
   padding: clamp(1.3rem, 4.5vw, 1.8rem) 1.4rem;
   border-radius: 18px;
-  border: 2px solid rgba(249, 115, 22, 0.35);
-  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(20, 241, 255, 0.45);
+  background: rgba(6, 10, 28, 0.6);
   font-size: clamp(2.1rem, 6vw, 2.6rem);
   font-weight: 700;
   color: var(--color-text);
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   min-height: clamp(64px, 12vw, 88px);
+  text-shadow: 0 0 14px rgba(20, 241, 255, 0.35);
 }
 
 .team-count-option input:checked + span {
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(239, 68, 68, 0.85));
+  background: linear-gradient(135deg, rgba(255, 61, 252, 0.95), rgba(20, 241, 255, 0.9));
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 20px 44px rgba(249, 115, 22, 0.45);
+  box-shadow: 0 24px 48px rgba(255, 61, 252, 0.45);
 }
 
 .team-count-option span:focus-visible {
@@ -421,6 +434,8 @@ button {
   overflow: hidden;
   isolation: isolate;
   animation: teamEntryPulse 2.4s ease-in-out infinite;
+  border: 1px solid rgba(255, 61, 252, 0.4);
+  background: linear-gradient(135deg, rgba(12, 16, 34, 0.85), rgba(25, 10, 35, 0.6));
 }
 
 .team-entry-button::before {
@@ -475,10 +490,12 @@ button {
   height: clamp(360px, 80vw, 540px);
   object-fit: contain;
   border-radius: 16px;
+  box-shadow: 0 25px 55px rgba(255, 61, 252, 0.45);
 }
 
 .team-entry-label {
   font-weight: 700;
+  text-shadow: 0 0 18px rgba(255, 61, 252, 0.4);
 }
 
 .team-entry-count {
@@ -486,6 +503,7 @@ button {
   font-weight: 700;
   color: currentColor;
   white-space: nowrap;
+  text-shadow: 0 0 12px rgba(20, 241, 255, 0.4);
 }
 
 @keyframes teamEntryGlow {
@@ -529,13 +547,14 @@ button {
 
 
 .list-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: linear-gradient(135deg, rgba(11, 15, 32, 0.8), rgba(17, 9, 32, 0.6));
   border-radius: var(--radius-md);
   padding: 20px 16px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
 }
 
 .players-list {
@@ -562,7 +581,7 @@ button {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  background: rgba(12, 16, 24, 0.85);
+  background: linear-gradient(135deg, rgba(9, 12, 28, 0.85), rgba(15, 8, 34, 0.7));
   border-radius: 16px;
   padding: clamp(1.2rem, 4vw, 1.6rem) 1.4rem;
   box-shadow: var(--shadow-card);
@@ -570,7 +589,7 @@ button {
   font-weight: 600;
   transition: transform 0.2s ease;
   touch-action: pan-y;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(20, 241, 255, 0.2);
 }
 
 .player-row.is-dragging .player-swipe-track {
@@ -585,6 +604,7 @@ button {
   flex: 1 1 auto;
   word-break: break-word;
   font-size: clamp(2.1rem, 6vw, 2.6rem);
+  text-shadow: 0 0 12px rgba(20, 241, 255, 0.35);
 }
 
 .player-actions {
@@ -676,10 +696,11 @@ button {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
+  position: relative;
 }
 
 .team-column {
-  background: var(--color-surface);
+  background: linear-gradient(135deg, rgba(12, 16, 34, 0.9), rgba(8, 10, 24, 0.65));
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   padding: clamp(20px, 6vw, 28px);
@@ -687,6 +708,7 @@ button {
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  border: 1px solid rgba(20, 241, 255, 0.25);
 }
 
 .team-header {
@@ -695,7 +717,8 @@ button {
 
 .team-header h2 {
   font-size: clamp(2.1rem, 6vw, 2.6rem);
-  color: var(--color-primary-strong);
+  color: var(--color-accent);
+  text-shadow: 0 0 18px rgba(20, 241, 255, 0.4);
 }
 
 .team-list {
@@ -708,7 +731,7 @@ button {
 }
 
 .team-player {
-  background: rgba(56, 189, 248, 0.12);
+  background: linear-gradient(135deg, rgba(20, 241, 255, 0.18), rgba(255, 61, 252, 0.16));
   border-radius: var(--radius-sm);
   padding: clamp(1.1rem, 3.6vw, 1.6rem) clamp(1.4rem, 4vw, 1.8rem);
   font-size: clamp(2.1rem, 6vw, 2.6rem);
@@ -733,6 +756,7 @@ button {
   font-weight: 600;
   color: var(--color-muted);
   box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 61, 252, 0.2);
 }
 
 @keyframes kamiHalo {
