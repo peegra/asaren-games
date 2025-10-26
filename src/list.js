@@ -2,6 +2,7 @@
   const db = window.db || firebase.firestore();
   const teamSplitButton = document.getElementById("teamSplitButton");
   const teamCountInputs = document.querySelectorAll('input[name="teamCount"]');
+  const teamEntryCountDisplay = document.getElementById("teamEntryCountDisplay");
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
   const GRADE_PRIORITY = new Map(
     ["小1", "小2", "小3", "小4", "小5", "小6", "中1", "中2", "中3", "大人"].map((grade, index) => [grade, index])
@@ -44,10 +45,18 @@
     storeTeamCount(initialTeamCount);
   }
 
+  function updateEntryCountDisplay(value) {
+    if (teamEntryCountDisplay) {
+      teamEntryCountDisplay.textContent = `(${value}人)`;
+    }
+  }
+
   // 選手一覧を取得して表示する関数
   function loadPlayers() {
     const list = document.getElementById("playersList");
     list.innerHTML = "";
+
+    updateEntryCountDisplay(0);
 
     db.collection("players").get().then(snapshot => {
       const players = [];
@@ -76,6 +85,9 @@
         }
         return a.name.localeCompare(b.name, "ja");
       });
+
+      let entryCount = players.reduce((total, player) => total + (player.participating ? 1 : 0), 0);
+      updateEntryCountDisplay(entryCount);
 
       const attachSwipeHandlers = (track, onDeleteRequest) => {
         const li = track.parentElement;
@@ -205,6 +217,11 @@
             participating: nextState
           }).then(() => {
             isParticipating = nextState;
+            entryCount += nextState ? 1 : -1;
+            if (entryCount < 0) {
+              entryCount = 0;
+            }
+            updateEntryCountDisplay(entryCount);
             setParticipationState(isParticipating);
           }).catch(error => {
             console.error("エントリー状態の更新に失敗しました:", error);
@@ -229,6 +246,10 @@
           li.classList.add("is-removing");
           db.collection("players").doc(player.id).delete()
             .then(() => {
+              if (isParticipating) {
+                entryCount = Math.max(0, entryCount - 1);
+                updateEntryCountDisplay(entryCount);
+              }
               swipeTrack.style.transition = "transform 0.2s ease";
               swipeTrack.style.transform = `translateX(-${Math.max(li.offsetWidth, 320)}px)`;
               setTimeout(() => {

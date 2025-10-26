@@ -385,6 +385,21 @@ button {
   box-shadow: var(--shadow-focus);
 }
 
+.team-entry-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.8rem, 3vw, 1.4rem);
+  width: 100%;
+}
+
+.team-entry-count {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 700;
+  color: currentColor;
+  white-space: nowrap;
+}
+
 .list-card {
   background: rgba(37, 99, 235, 0.06);
   border-radius: var(--radius-md);
@@ -482,11 +497,6 @@ button {
   color: #fff;
   transform: translateY(-2px);
   box-shadow: var(--shadow-focus);
-}
-
-.danger-button svg {
-  width: 1.5rem;
-  height: 1.5rem;
 }
 
 .team-board {
