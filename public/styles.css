@@ -401,6 +401,57 @@ button {
   width: 100%;
   padding: clamp(1.6rem, 5vw, 2.6rem) clamp(1.2rem, 4vw, 2rem);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: teamEntryPulse 1.2s ease-in-out infinite;
+}
+
+.team-entry-button::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 65%);
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  animation: teamEntryGlow 1s ease-in-out infinite;
+  z-index: 0;
+}
+
+.team-entry-button:hover::before,
+.team-entry-button:focus-visible::before {
+  opacity: 0.6;
+  transform: scale(1.05);
+}
+
+.team-entry-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.team-entry-button:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.team-entry-button::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: conic-gradient(from 0deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: rotate(0deg);
+  animation: teamEntrySheen 1s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.team-entry-button:hover::after,
+.team-entry-button:focus-visible::after {
+  opacity: 0.35;
 }
 
 .team-entry-image {
@@ -420,6 +471,44 @@ button {
   color: currentColor;
   white-space: nowrap;
 }
+
+@keyframes teamEntryGlow {
+  0%, 70%, 100% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  40% {
+    opacity: 0.5;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes teamEntrySheen {
+  0%, 100% {
+    opacity: 0;
+    transform: rotate(0deg);
+  }
+  45% {
+    opacity: 0.3;
+    transform: rotate(25deg);
+  }
+  70% {
+    opacity: 0;
+    transform: rotate(50deg);
+  }
+}
+
+@keyframes teamEntryPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0), 0 0 0 rgba(37, 99, 235, 0);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(255, 255, 255, 0.18), 0 0 18px rgba(37, 99, 235, 0.28);
+    filter: brightness(1.04);
+  }
+}
+
 
 .list-card {
   background: rgba(37, 99, 235, 0.06);
