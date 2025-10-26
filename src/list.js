@@ -3,6 +3,9 @@
   const teamSplitButton = document.getElementById("teamSplitButton");
   const teamCountInputs = document.querySelectorAll('input[name="teamCount"]');
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
+  const GRADE_PRIORITY = new Map(
+    ["小1", "小2", "小3", "小4", "小5", "小6", "中1", "中2", "中3", "大人"].map((grade, index) => [grade, index])
+  );
 
   function getStoredTeamCount() {
     try {
@@ -46,20 +49,46 @@
     const list = document.getElementById("playersList");
     list.innerHTML = "";
 
-    db.collection("players").orderBy("name").get().then(snapshot => {
+    db.collection("players").get().then(snapshot => {
+      const players = [];
+
       snapshot.forEach(doc => {
         const data = doc.data();
+        players.push({
+          id: doc.id,
+          name: data.name,
+          grade: data.grade || "",
+          participating: Boolean(data.participating)
+        });
+      });
+
+      const getGradeOrder = grade => {
+        if (GRADE_PRIORITY.has(grade)) {
+          return GRADE_PRIORITY.get(grade);
+        }
+        return GRADE_PRIORITY.size;
+      };
+
+      players.sort((a, b) => {
+        const gradeDifference = getGradeOrder(a.grade) - getGradeOrder(b.grade);
+        if (gradeDifference !== 0) {
+          return gradeDifference;
+        }
+        return a.name.localeCompare(b.name, "ja");
+      });
+
+      players.forEach(player => {
         const li = document.createElement("li");
         li.className = "player-row";
 
         const info = document.createElement("span");
         info.className = "player-info";
-        info.textContent = data.grade ? `${data.name}（${data.grade}）` : data.name;
+        info.textContent = player.grade ? `${player.name}（${player.grade}）` : player.name;
 
         const actions = document.createElement("div");
         actions.className = "player-actions";
 
-        let isParticipating = Boolean(data.participating);
+        let isParticipating = player.participating;
 
         const participationButton = document.createElement("button");
         participationButton.type = "button";
@@ -83,7 +112,7 @@
           const nextState = !isParticipating;
           participationButton.disabled = true;
 
-          db.collection("players").doc(doc.id).update({
+          db.collection("players").doc(player.id).update({
             participating: nextState
           }).then(() => {
             isParticipating = nextState;
@@ -108,14 +137,14 @@
             <path d="M13.5 11v6" />
           </svg>
         `;
-        deleteButton.setAttribute("aria-label", `${data.name} を削除`);
+        deleteButton.setAttribute("aria-label", `${player.name} を削除`);
         deleteButton.addEventListener("click", () => {
-          const confirmed = window.confirm(`${data.name} を削除しますか？`);
+          const confirmed = window.confirm(`${player.name} を削除しますか？`);
           if (!confirmed) {
             return;
           }
 
-          db.collection("players").doc(doc.id).delete()
+          db.collection("players").doc(player.id).delete()
             .then(() => {
               li.remove();
             })
