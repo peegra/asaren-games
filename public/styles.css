@@ -433,9 +433,21 @@ button {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(24px);
+  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.45s ease;
   animation: teamEntryPulse 2.4s ease-in-out infinite;
+  animation-play-state: paused;
   border: 1px solid rgba(255, 61, 252, 0.4);
   background: linear-gradient(135deg, rgba(12, 16, 34, 0.85), rgba(25, 10, 35, 0.6));
+}
+
+.team-entry-button.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  animation-play-state: running;
 }
 
 .team-entry-button::before {

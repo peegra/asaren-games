@@ -4,6 +4,25 @@
   const teamCountInputs = document.querySelectorAll('input[name="teamCount"]');
   const teamEntryCountDisplay = document.getElementById("teamEntryCountDisplay");
   const kamiSound = document.getElementById("kamiSound");
+  const setTeamButtonVisibility = visible => {
+    if (!teamSplitButton) return;
+    teamSplitButton.classList.toggle("is-visible", Boolean(visible));
+  };
+
+  function playKamiSound() {
+    if (!kamiSound) {
+      return;
+    }
+    try {
+      kamiSound.currentTime = 0;
+      const result = kamiSound.play();
+      if (result && typeof result.catch === "function") {
+        result.catch(() => {});
+      }
+    } catch (error) {
+      console.warn("サウンドの再生に失敗しました:", error);
+    }
+  }
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
   const GRADE_PRIORITY = new Map(
     ["小1", "小2", "小3", "小4", "小5", "小6", "中1", "中2", "中3", "大人"].map((grade, index) => [grade, index])
@@ -42,6 +61,7 @@
 
   const initialTeamCount = getStoredTeamCount();
   storeTeamCount(initialTeamCount);
+  setTeamButtonVisibility(false);
 
   if (teamCountInputs.length) {
     teamCountInputs.forEach(input => {
@@ -71,6 +91,7 @@
     list.innerHTML = "";
 
     updateEntryCountDisplay(0);
+    setTeamButtonVisibility(false);
 
     db.collection("players").get().then(snapshot => {
       const players = [];
@@ -299,8 +320,10 @@
 
         list.appendChild(li);
       });
+      setTeamButtonVisibility(true);
     }).catch(error => {
       console.error("エラー:", error);
+      setTeamButtonVisibility(true);
     });
   }
 
@@ -330,17 +353,3 @@
   // 初回ロード
   document.addEventListener("DOMContentLoaded", loadPlayers);
 })();
-  function playKamiSound() {
-    if (!kamiSound) {
-      return;
-    }
-    try {
-      kamiSound.currentTime = 0;
-      const result = kamiSound.play();
-      if (result && typeof result.catch === "function") {
-        result.catch(() => {});
-      }
-    } catch (error) {
-      console.warn("サウンドの再生に失敗しました:", error);
-    }
-  }
