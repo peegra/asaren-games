@@ -77,9 +77,98 @@
         return a.name.localeCompare(b.name, "ja");
       });
 
+      const attachSwipeHandlers = (track, onDeleteRequest) => {
+        const li = track.parentElement;
+        const maxLeft = -180;
+        const threshold = 110;
+        let pointerId = null;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        let isProcessing = false;
+
+        const setTranslate = value => {
+          track.style.transform = `translateX(${value}px)`;
+        };
+
+        const resetPosition = () => {
+          track.style.transition = "transform 0.2s ease";
+          setTranslate(0);
+          li.classList.remove("is-dragging");
+          li.classList.remove("is-swipe-open");
+          isProcessing = false;
+        };
+
+        const handlePointerDown = event => {
+          if (isProcessing || pointerId !== null) {
+            return;
+          }
+          const interactiveTarget = event.target.closest("button, a, input, textarea");
+          if (interactiveTarget) {
+            return;
+          }
+          if (event.pointerType === "mouse" && event.button !== 0) {
+            return;
+          }
+          pointerId = event.pointerId;
+          startX = event.clientX;
+          currentX = 0;
+          isDragging = true;
+          track.style.transition = "none";
+          li.classList.add("is-dragging");
+          track.setPointerCapture(pointerId);
+        };
+
+        const handlePointerMove = event => {
+          if (!isDragging || event.pointerId !== pointerId) {
+            return;
+          }
+          const deltaX = event.clientX - startX;
+          if (deltaX < 0) {
+            currentX = Math.max(deltaX, maxLeft);
+            setTranslate(currentX);
+            if (event.pointerType === "touch") {
+              event.preventDefault();
+            }
+          } else {
+            currentX = 0;
+            setTranslate(0);
+          }
+        };
+
+        const handlePointerEnd = event => {
+          if (!isDragging || event.pointerId !== pointerId) {
+            return;
+          }
+          track.releasePointerCapture(pointerId);
+          isDragging = false;
+          li.classList.remove("is-dragging");
+          track.style.transition = "transform 0.2s ease";
+          const shouldDelete = currentX <= -threshold;
+          if (shouldDelete) {
+            isProcessing = true;
+            li.classList.add("is-swipe-open");
+            setTranslate(maxLeft);
+            onDeleteRequest(resetPosition);
+          } else {
+            resetPosition();
+          }
+          pointerId = null;
+        };
+
+        track.addEventListener("pointerdown", handlePointerDown);
+        track.addEventListener("pointermove", handlePointerMove);
+        track.addEventListener("pointerup", handlePointerEnd);
+        track.addEventListener("pointercancel", handlePointerEnd);
+        track.addEventListener("lostpointercapture", handlePointerEnd);
+      };
+
       players.forEach(player => {
         const li = document.createElement("li");
         li.className = "player-row";
+
+        const swipeTrack = document.createElement("div");
+        swipeTrack.className = "player-swipe-track";
 
         const info = document.createElement("span");
         info.className = "player-info";
@@ -125,39 +214,34 @@
           });
         });
 
-        const deleteButton = document.createElement("button");
-        deleteButton.type = "button";
-        deleteButton.className = "danger-button";
-        deleteButton.innerHTML = `
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M4.5 6.5h15" />
-            <path d="M9.5 3.5h5a1 1 0 0 1 1 1v2h-7v-2a1 1 0 0 1 1-1Z" />
-            <path d="M18 6.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 18.5v-12" />
-            <path d="M10.5 11v6" />
-            <path d="M13.5 11v6" />
-          </svg>
-        `;
-        deleteButton.setAttribute("aria-label", `${player.name} を削除`);
-        deleteButton.addEventListener("click", () => {
+        actions.appendChild(participationButton);
+        swipeTrack.appendChild(info);
+        swipeTrack.appendChild(actions);
+        li.appendChild(swipeTrack);
+
+        attachSwipeHandlers(swipeTrack, resetSwipe => {
           const confirmed = window.confirm(`${player.name} を削除しますか？`);
           if (!confirmed) {
+            resetSwipe();
             return;
           }
 
+          li.classList.add("is-removing");
           db.collection("players").doc(player.id).delete()
             .then(() => {
-              li.remove();
+              swipeTrack.style.transition = "transform 0.2s ease";
+              swipeTrack.style.transform = `translateX(-${Math.max(li.offsetWidth, 320)}px)`;
+              setTimeout(() => {
+                li.remove();
+              }, 200);
             })
             .catch(error => {
               console.error("削除時にエラーが発生しました:", error);
               alert("削除に失敗しました。再度お試しください。");
+              resetSwipe();
             });
         });
 
-        actions.appendChild(participationButton);
-        actions.appendChild(deleteButton);
-        li.appendChild(info);
-        li.appendChild(actions);
         list.appendChild(li);
       });
     }).catch(error => {
