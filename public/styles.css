@@ -196,8 +196,9 @@ button {
 .pill-input {
   border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 999px;
-  padding: 0.85rem 1.4rem;
-  font-size: clamp(1.1rem, 3.6vw, 1.25rem);
+  width: 100%;
+  padding: 1.6rem 2.4rem;
+  font-size: clamp(1.4rem, 4.5vw, 1.8rem);
   background: rgba(255, 255, 255, 0.04);
   color: var(--color-text);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
