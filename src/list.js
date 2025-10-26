@@ -3,6 +3,7 @@
   const teamSplitButton = document.getElementById("teamSplitButton");
   const teamCountInputs = document.querySelectorAll('input[name="teamCount"]');
   const teamEntryCountDisplay = document.getElementById("teamEntryCountDisplay");
+  const kamiSound = document.getElementById("kamiSound");
   const TEAM_COUNT_STORAGE_KEY = "teamCount";
   const GRADE_PRIORITY = new Map(
     ["小1", "小2", "小3", "小4", "小5", "小6", "中1", "中2", "中3", "大人"].map((grade, index) => [grade, index])
@@ -309,6 +310,18 @@
     teamSplitButton.addEventListener("click", () => {
       const selected = Array.from(teamCountInputs).find(input => input.checked)?.value || "2";
       storeTeamCount(selected);
+
+      if (kamiSound) {
+        try {
+          kamiSound.currentTime = 0;
+          const promise = kamiSound.play();
+          if (promise && typeof promise.catch === "function") {
+            promise.catch(() => {});
+          }
+        } catch (error) {
+          console.warn("サウンドの再生に失敗しました:", error);
+        }
+      }
 
       const parentWindow = window.parent || window;
 

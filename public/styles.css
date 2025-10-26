@@ -629,6 +629,49 @@ button {
   box-shadow: var(--shadow-focus);
 }
 
+#view-team {
+  position: relative;
+  overflow: hidden;
+}
+
+#view-team::before,
+#view-team::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+#view-team.is-descending::before {
+  background: radial-gradient(circle at center, rgba(249, 115, 22, 0.35), rgba(249, 115, 22, 0));
+  animation: kamiHalo 2.4s ease-out forwards;
+}
+
+#view-team.is-descending::after {
+  background: conic-gradient(from 0deg, rgba(255, 255, 255, 0.4), rgba(56, 189, 248, 0.25), rgba(255, 255, 255, 0));
+  mix-blend-mode: screen;
+  animation: kamiRays 2.4s ease-out forwards;
+}
+
+#view-team.is-descending .team-board,
+#view-team.is-descending .team-empty {
+  animation: kamiDescendBoard 1.8s cubic-bezier(0.18, 0.82, 0.24, 1) forwards;
+}
+
+#view-team.is-descending .team-column {
+  position: relative;
+  z-index: 1;
+}
+
+#view-team.is-descending #teamTitle,
+#view-team.is-descending .page-note {
+  animation: kamiTitleGlow 2.4s ease-out forwards;
+}
+
 .team-board {
   display: grid;
   grid-template-columns: 1fr;
@@ -690,6 +733,76 @@ button {
   font-weight: 600;
   color: var(--color-muted);
   box-shadow: var(--shadow-card);
+}
+
+@keyframes kamiHalo {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  35% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+  75% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes kamiRays {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.9);
+  }
+  45% {
+    opacity: 0.6;
+    transform: rotate(90deg) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(160deg) scale(1.12);
+  }
+}
+
+@keyframes kamiDescendBoard {
+  0% {
+    opacity: 0;
+    transform: translateY(32px) scale(0.9);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.02);
+  }
+  70% {
+    transform: translateY(4px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes kamiTitleGlow {
+  0% {
+    text-shadow: none;
+    color: var(--color-text);
+  }
+  35% {
+    text-shadow: 0 0 18px rgba(249, 115, 22, 0.65), 0 0 32px rgba(56, 189, 248, 0.45);
+    color: #ffffff;
+  }
+  70% {
+    text-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+  }
+  100% {
+    text-shadow: none;
+    color: var(--color-text);
+  }
 }
 
 @media (max-width: 560px) {

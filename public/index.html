@@ -122,6 +122,7 @@
       <section id="teamBoard" class="team-board" aria-live="polite"></section>
     </section>
   </main>
+  <audio id="kamiSound" src="music/levelup.mp3" preload="auto"></audio>
 
   <script>
     const tabs = {
@@ -150,8 +151,22 @@
       if (target === 'list' && typeof window.loadPlayersOnShow === 'function') {
         window.loadPlayersOnShow();
       }
-      if (target === 'team' && typeof window.loadTeamsOnShow === 'function') {
-        window.loadTeamsOnShow(force);
+      if (target === 'team') {
+        const teamSection = views.team;
+        if (force) {
+          teamSection.classList.remove('is-descending');
+          void teamSection.offsetWidth;
+          teamSection.classList.add('is-descending');
+          if (teamSection._descendTimer) {
+            clearTimeout(teamSection._descendTimer);
+          }
+          teamSection._descendTimer = setTimeout(() => {
+            teamSection.classList.remove('is-descending');
+          }, 2400);
+        }
+        if (typeof window.loadTeamsOnShow === 'function') {
+          window.loadTeamsOnShow(force);
+        }
       }
       const tabsTop = document.querySelector('.tabs');
       if (tabsTop) {
