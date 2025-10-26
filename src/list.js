@@ -307,10 +307,6 @@
   window.loadPlayersOnShow = loadPlayers;
 
   if (teamSplitButton) {
-    teamSplitButton.addEventListener("pointerdown", () => {
-      playKamiSound();
-    });
-
     teamSplitButton.addEventListener("click", () => {
       const selected = Array.from(teamCountInputs).find(input => input.checked)?.value || "2";
       storeTeamCount(selected);
