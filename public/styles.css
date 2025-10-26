@@ -331,6 +331,13 @@ button {
   padding: 0;
 }
 
+.page-note {
+  font-size: clamp(1.1rem, 3.8vw, 1.3rem);
+  color: var(--color-muted);
+  text-align: center;
+  margin: 0;
+}
+
 .team-count-grid {
   display: grid;
   gap: 14px;
@@ -521,7 +528,7 @@ button {
 }
 
 .team-header h2 {
-  font-size: clamp(1.6rem, 4.6vw, 1.9rem);
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   color: var(--color-primary-strong);
 }
 
@@ -537,8 +544,8 @@ button {
 .team-player {
   background: rgba(37, 99, 235, 0.08);
   border-radius: var(--radius-sm);
-  padding: 0.9rem 1.2rem;
-  font-size: clamp(1.25rem, 4.2vw, 1.45rem);
+  padding: clamp(1.1rem, 3.6vw, 1.6rem) clamp(1.4rem, 4vw, 1.8rem);
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   font-weight: 600;
   color: var(--color-text);
 }
@@ -547,6 +554,7 @@ button {
   background: rgba(37, 99, 235, 0.06);
   color: var(--color-muted);
   font-weight: 600;
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   text-align: center;
 }
 
@@ -555,7 +563,7 @@ button {
   border-radius: var(--radius-md);
   padding: 24px;
   text-align: center;
-  font-size: clamp(1.2rem, 4vw, 1.4rem);
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   font-weight: 600;
   color: var(--color-muted);
   box-shadow: var(--shadow-card);
@@ -629,11 +637,11 @@ button {
   }
 
   .players-list li {
-    font-size: clamp(1.3rem, 3.4vw, 1.55rem);
+    font-size: clamp(2.1rem, 6vw, 2.6rem);
   }
 
   .team-player {
-    font-size: clamp(1.25rem, 3.2vw, 1.5rem);
+    font-size: clamp(2.1rem, 6vw, 2.6rem);
   }
 }
 

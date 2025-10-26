@@ -48,8 +48,6 @@
 
     <section id="view-registration" class="page">
       <h1>選手登録</h1>
-      <p class="page-helper">選手の名前と学年を入力して、リストに追加しましょう。</p>
-
       <form class="form-card" onsubmit="event.preventDefault(); addPlayer();">
         <div class="form-field">
           <label for="name">名前</label>
@@ -87,7 +85,6 @@
 
     <section id="view-list" class="page d-none">
       <h1>選手一覧</h1>
-      <p class="page-helper">登録済みのメンバーが下に表示されます。</p>
       <div class="list-actions">
         <fieldset class="team-settings">
           <legend id="teamCountLabel" class="team-settings-label">振り分けチーム数</legend>
@@ -117,7 +114,7 @@
 
     <section id="view-team" class="page d-none">
       <h1 id="teamTitle">チーム分け</h1>
-      <p class="page-helper">最高のチーム分けが出来上がったよ！チーム分けはASARENの神様が作ったので文句は言えないよ！</p>
+      <p class="page-note">チーム分けはASARENの神様が作ったので文句は言えないよ！</p>
 
       <section id="teamBoard" class="team-board" aria-live="polite"></section>
     </section>
