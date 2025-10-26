@@ -70,25 +70,47 @@
   function composeTeamState(players, teamCount) {
     const category = getRandomCategory();
     const names = getTeamNames(teamCount, category);
-    const buckets = Array.from({ length: teamCount }, () => []);
-    const bucketScores = Array.from({ length: teamCount }, () => 0);
     const shuffled = shuffle(players);
     const scoredPlayers = shuffled
-      .map(player => ({
-        data: player,
-        score: GRADE_POINTS[player.grade] ?? DEFAULT_GRADE_POINTS
-      }))
+      .map(player => {
+        const score =
+          typeof player.points === "number"
+            ? player.points
+            : GRADE_POINTS[player.grade] ?? DEFAULT_GRADE_POINTS;
+        return { data: player, score };
+      })
       .sort((a, b) => b.score - a.score);
 
+    const buckets = Array.from({ length: teamCount }, () => []);
+    const bucketScores = Array.from({ length: teamCount }, () => 0);
+    const totalPlayers = scoredPlayers.length;
+    const baseSize = Math.floor(totalPlayers / teamCount);
+    const remainder = totalPlayers % teamCount;
+    const targetSizes = Array.from({ length: teamCount }, (_, index) => baseSize + (index < remainder ? 1 : 0));
+
     scoredPlayers.forEach(({ data, score }) => {
-      let targetIndex = 0;
-      let minScore = bucketScores[0];
-      for (let i = 1; i < teamCount; i += 1) {
-        if (bucketScores[i] < minScore) {
-          minScore = bucketScores[i];
+      let targetIndex = -1;
+      let minScore = Infinity;
+
+      for (let i = 0; i < teamCount; i += 1) {
+        if (buckets[i].length >= targetSizes[i]) {
+          continue;
+        }
+        const candidateScore = bucketScores[i];
+        if (candidateScore < minScore) {
+          minScore = candidateScore;
           targetIndex = i;
+        } else if (candidateScore === minScore && targetIndex !== -1) {
+          if (buckets[i].length < buckets[targetIndex].length) {
+            targetIndex = i;
+          }
         }
       }
+
+      if (targetIndex === -1) {
+        targetIndex = 0;
+      }
+
       buckets[targetIndex].push(data);
       bucketScores[targetIndex] += score;
     });
@@ -206,15 +228,35 @@
   async function fetchParticipatingPlayers() {
     const snapshot = await db.collection("players").where("participating", "==", true).get();
     const players = [];
+    const updatePromises = [];
     snapshot.forEach(doc => {
       const data = doc.data();
+      const points =
+        typeof data.points === "number"
+          ? data.points
+          : GRADE_POINTS[data.grade] ?? DEFAULT_GRADE_POINTS;
+      if (typeof data.points !== "number" || data.points !== points) {
+        updatePromises.push(
+          doc.ref.update({ points }).catch(error => {
+            console.warn("ポイントの更新に失敗しました:", error);
+          })
+        );
+      }
       players.push({
         id: doc.id,
         name: data.name,
         grade: data.grade || "",
+        points,
         participating: true
       });
     });
+    if (updatePromises.length) {
+      try {
+        await Promise.all(updatePromises);
+      } catch (error) {
+        console.warn("ポイントのバッチ更新に失敗しました:", error);
+      }
+    }
     return players;
   }
 

@@ -7,6 +7,19 @@
   const GRADE_PRIORITY = new Map(
     ["小1", "小2", "小3", "小4", "小5", "小6", "中1", "中2", "中3", "大人"].map((grade, index) => [grade, index])
   );
+  const GRADE_POINTS = {
+    "小1": 1,
+    "小2": 2,
+    "小3": 3,
+    "小4": 4,
+    "小5": 5,
+    "小6": 6,
+    "中1": 7,
+    "中2": 8,
+    "中3": 9,
+    "大人": 10
+  };
+  const DEFAULT_GRADE_POINTS = 5;
 
   function getStoredTeamCount() {
     try {
@@ -60,16 +73,36 @@
 
     db.collection("players").get().then(snapshot => {
       const players = [];
+      const updatePromises = [];
 
       snapshot.forEach(doc => {
         const data = doc.data();
+        const points =
+          typeof data.points === "number"
+            ? data.points
+            : GRADE_POINTS[data.grade] ?? DEFAULT_GRADE_POINTS;
+
+        if (typeof data.points !== "number" || data.points !== points) {
+          updatePromises.push(
+            doc.ref.update({ points }).catch(error => {
+              console.warn("ポイントの更新に失敗しました:", error);
+            })
+          );
+        }
+
         players.push({
           id: doc.id,
           name: data.name,
           grade: data.grade || "",
+          points,
           participating: Boolean(data.participating)
         });
       });
+      if (updatePromises.length) {
+        Promise.all(updatePromises).catch(error => {
+          console.warn("ポイントのバッチ更新に失敗しました:", error);
+        });
+      }
 
       const getGradeOrder = grade => {
         if (GRADE_PRIORITY.has(grade)) {
