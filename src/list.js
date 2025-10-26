@@ -307,21 +307,15 @@
   window.loadPlayersOnShow = loadPlayers;
 
   if (teamSplitButton) {
+    teamSplitButton.addEventListener("pointerdown", () => {
+      playKamiSound();
+    });
+
     teamSplitButton.addEventListener("click", () => {
       const selected = Array.from(teamCountInputs).find(input => input.checked)?.value || "2";
       storeTeamCount(selected);
 
-      if (kamiSound) {
-        try {
-          kamiSound.currentTime = 0;
-          const promise = kamiSound.play();
-          if (promise && typeof promise.catch === "function") {
-            promise.catch(() => {});
-          }
-        } catch (error) {
-          console.warn("サウンドの再生に失敗しました:", error);
-        }
-      }
+      playKamiSound();
 
       const parentWindow = window.parent || window;
 
@@ -340,3 +334,17 @@
   // 初回ロード
   document.addEventListener("DOMContentLoaded", loadPlayers);
 })();
+  function playKamiSound() {
+    if (!kamiSound) {
+      return;
+    }
+    try {
+      kamiSound.currentTime = 0;
+      const result = kamiSound.play();
+      if (result && typeof result.catch === "function") {
+        result.catch(() => {});
+      }
+    } catch (error) {
+      console.warn("サウンドの再生に失敗しました:", error);
+    }
+  }
