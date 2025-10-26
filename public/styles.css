@@ -203,15 +203,15 @@ button {
 }
 
 .grade-button {
-  padding: 1.15rem 1.5rem;
+  padding: clamp(1.3rem, 4.5vw, 1.8rem) 1.4rem;
   border-radius: 18px;
   border: 2px solid rgba(37, 99, 235, 0.35);
   background: #fff;
   font-weight: 700;
-  font-size: clamp(1.4rem, 5vw, 1.6rem);
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   color: var(--color-primary-strong);
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-  min-height: 72px;
+  min-height: clamp(64px, 12vw, 88px);
 }
 
 .grade-button:hover,
@@ -250,12 +250,12 @@ button {
 }
 
 .primary-button {
-  padding: 1rem 1.6rem;
+  padding: clamp(1.3rem, 4.5vw, 1.8rem) 1.6rem;
   background: var(--color-accent);
   color: #fff;
-  font-size: clamp(1.15rem, 4vw, 1.35rem);
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
-  min-height: 62px;
+  min-height: clamp(64px, 12vw, 88px);
 }
 
 .primary-button:hover,
@@ -266,12 +266,12 @@ button {
 }
 
 .secondary-button {
-  padding: 1rem 2.4rem;
+  padding: clamp(1.3rem, 4.5vw, 1.8rem) 2.4rem;
   background: rgba(37, 99, 235, 0.12);
   color: var(--color-primary-strong);
   border: 1px solid rgba(37, 99, 235, 0.35);
-  font-size: clamp(1.15rem, 4vw, 1.35rem);
-  min-height: 60px;
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
+  min-height: clamp(64px, 12vw, 88px);
 }
 
 .secondary-button:hover,
@@ -412,13 +412,14 @@ button {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-size: clamp(1.3rem, 4.4vw, 1.5rem);
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
   font-weight: 600;
 }
 
 .player-info {
   flex: 1 1 auto;
   word-break: break-word;
+  font-size: clamp(2.1rem, 6vw, 2.6rem);
 }
 
 .player-actions {
@@ -428,12 +429,12 @@ button {
 }
 
 .participation-button {
-  padding: 0.8rem 1.5rem;
+  padding: clamp(1rem, 3.6vw, 1.4rem) 1.8rem;
   border-radius: 999px;
   border: 1px solid rgba(16, 185, 129, 0.4);
   background: rgba(16, 185, 129, 0.1);
   color: var(--color-accent-strong);
-  font-size: clamp(1.1rem, 3.6vw, 1.3rem);
+  font-size: clamp(2rem, 5.8vw, 2.5rem);
   font-weight: 700;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   min-height: 60px;
