@@ -447,10 +447,18 @@ button {
   box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
 }
 
-.participation-button:hover,
-.participation-button:focus {
+.participation-button:not(.is-active):hover,
+.participation-button:not(.is-active):focus {
   outline: none;
   background: rgba(16, 185, 129, 0.22);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-focus);
+}
+
+.participation-button.is-active:hover,
+.participation-button.is-active:focus {
+  background: var(--color-accent);
+  color: #fff;
   transform: translateY(-2px);
   box-shadow: var(--shadow-focus);
 }
