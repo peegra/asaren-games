@@ -145,6 +145,9 @@
         section.classList.toggle('d-none', key !== target);
       });
       setActiveTab(target);
+      if (target === 'list' && typeof window.loadPlayersOnShow === 'function') {
+        window.loadPlayersOnShow();
+      }
       if (target === 'team' && typeof window.loadTeamsOnShow === 'function') {
         window.loadTeamsOnShow(force);
       }
