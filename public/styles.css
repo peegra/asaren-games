@@ -33,6 +33,8 @@ body {
     radial-gradient(140% 140% at 50% -20%, rgba(249, 115, 22, 0.28), transparent 55%),
     radial-gradient(120% 120% at 90% 0%, rgba(56, 189, 248, 0.25), transparent 45%),
     var(--color-bg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: var(--color-text);
   line-height: 1.6;
   font-size: clamp(1.1rem, 4vw, 1.3rem);
